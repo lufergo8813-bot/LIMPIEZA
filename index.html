@@ -1,0 +1,386 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#12303A">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<title>Aseo Airbnb</title>
+<link rel="manifest" href="manifest.json">
+<link rel="icon" href="icon-192.png">
+<link rel="apple-touch-icon" href="icon-192.png">
+<style>
+:root{--ink:#12303A;--bg:#EEF4F5;--card:#fff;--aqua:#0E8F9C;--aquad:#0A6B75;--aqual:#DDF1F3;--ok:#2E9E6B;--warn:#C98A00;--bad:#D2493B;--line:#D5E2E5;--mute:#5C7680}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{margin:0;background:var(--bg);color:var(--ink);font-family:"Avenir Next","Segoe UI",system-ui,-apple-system,Roboto,sans-serif;font-size:17px;line-height:1.35}
+body{padding-bottom:calc(84px + env(safe-area-inset-bottom))}
+main{max-width:640px;margin:0 auto;padding:0 16px 24px}
+h1{font-size:28px;line-height:1.1;margin:0;font-weight:800;letter-spacing:-.5px}
+h2{font-size:20px;margin:22px 0 10px;font-weight:800}
+h3{font-size:17px;margin:0;font-weight:700}
+p{margin:6px 0}
+.hero{background:var(--ink);color:#fff;margin:0 -16px 16px;padding:calc(22px + env(safe-area-inset-top)) 20px 22px;border-radius:0 0 26px 26px}
+.hero small{color:#9FC3CB;display:block;margin-top:6px;font-size:15px}
+.chip{display:inline-flex;align-items:center;gap:6px;font-size:13px;font-weight:700;padding:4px 10px;border-radius:99px;background:#1d4551;color:#BFE3E8;margin-top:12px}
+.chip i{width:8px;height:8px;border-radius:50%;background:var(--bad)}.chip.on i{background:#4be29a}
+.card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:14px;margin:10px 0}
+.card.warn{background:#FFF7E0;border-color:#F0D9A0}.card.info{background:var(--aqual);border-color:#B7DEE3}
+.btn{display:block;width:100%;border:0;border-radius:14px;padding:16px;font:inherit;font-weight:800;background:var(--aqua);color:#fff;margin:10px 0;text-align:center;cursor:pointer}
+.btn:active{background:var(--aquad)}
+.btn.sec{background:#fff;color:var(--aquad);border:2px solid var(--aqua)}
+.btn.ghost{background:transparent;color:var(--mute);border:1px solid var(--line);font-weight:700}
+.btn.bad{background:#fff;color:var(--bad);border:2px solid var(--bad)}
+.btn.sm{display:inline-block;width:auto;padding:9px 14px;margin:4px 6px 4px 0;font-size:15px}
+.btn:disabled{opacity:.5}
+label{display:block;font-weight:700;margin:14px 0 6px;font-size:15px}
+input,select,textarea{width:100%;font:inherit;padding:13px;border:1.5px solid var(--line);border-radius:12px;background:#fff;color:var(--ink)}
+textarea{min-height:84px;resize:vertical}
+input:focus,select:focus,textarea:focus,.btn:focus-visible,.row:focus-visible{outline:3px solid #7CCBD3;outline-offset:1px}
+.top{display:flex;align-items:center;gap:12px;padding:calc(14px + env(safe-area-inset-top)) 0 8px}
+.back{border:0;background:#fff;border:1px solid var(--line);border-radius:12px;width:44px;height:44px;font-size:22px;color:var(--ink)}
+.row{display:flex;gap:14px;align-items:center;width:100%;text-align:left;border:1.5px solid var(--line);background:#fff;border-radius:14px;padding:15px;margin:8px 0;font:inherit;color:var(--ink);cursor:pointer}
+.row .box{flex:none;width:30px;height:30px;border-radius:9px;border:2px solid #9DB6BC;display:grid;place-items:center;color:transparent;font-weight:900}
+.row.on{background:var(--aqual);border-color:var(--aqua)}
+.row.on .box{background:var(--ok);border-color:var(--ok);color:#fff}
+.row.on span:last-child{color:#456;text-decoration:line-through;text-decoration-color:#8bb}
+.area{display:block;width:100%;text-align:left;font:inherit;color:var(--ink);background:#fff;border:1.5px solid var(--line);border-radius:16px;padding:14px;margin:9px 0}
+.area b{display:flex;justify-content:space-between}
+.bar{height:8px;background:#E3EDEF;border-radius:9px;margin-top:10px;overflow:hidden}.bar i{display:block;height:100%;background:var(--aqua);border-radius:9px}
+.bar.full i{background:var(--ok)}
+.ringwrap{display:flex;gap:16px;align-items:center;background:#fff;border:1px solid var(--line);border-radius:18px;padding:14px;margin:8px 0}
+.ring{position:relative;width:84px;height:84px;flex:none}.ring b{position:absolute;inset:0;display:grid;place-items:center;font-size:20px}
+.seg{display:flex;gap:6px}.seg button{flex:1;padding:11px 4px;border-radius:11px;border:1.5px solid var(--line);background:#fff;font:inherit;font-weight:700;font-size:14px;color:var(--mute)}
+.seg button.on.ok{background:var(--ok);border-color:var(--ok);color:#fff}.seg button.on.poco{background:#F2B705;border-color:#F2B705;color:#222}.seg button.on.agotado{background:var(--bad);border-color:var(--bad);color:#fff}
+.badge{font-size:12.5px;font-weight:800;padding:3px 9px;border-radius:99px;background:#FFE9B0;color:#7a5600}.badge.sent{background:#D3F2E2;color:#146B43}.badge.draft{background:#E3EDEF;color:var(--mute)}
+.photos{display:flex;gap:8px;flex-wrap:wrap}.photos div{position:relative}.photos img{width:78px;height:78px;object-fit:cover;border-radius:10px;border:1px solid var(--line)}
+.photos button{position:absolute;top:-6px;right:-6px;width:24px;height:24px;border-radius:50%;border:0;background:var(--bad);color:#fff;font-weight:900}
+.nav{position:fixed;left:0;right:0;bottom:0;background:#fff;border-top:1px solid var(--line);display:flex;padding:6px 8px calc(6px + env(safe-area-inset-bottom));z-index:5}
+.nav button{flex:1;border:0;background:none;font:inherit;font-size:13px;font-weight:700;color:var(--mute);padding:8px 0;border-radius:12px}.nav button.on{color:var(--aquad);background:var(--aqual)}
+.nav svg{display:block;margin:0 auto 2px}
+.mute{color:var(--mute);font-size:15px}.sm{font-size:14px}
+.line{display:flex;gap:8px;align-items:center;margin:6px 0}.line input{flex:1}.line .x{flex:none;width:44px;height:44px;border-radius:12px;border:1.5px solid var(--line);background:#fff;color:var(--bad);font-size:20px;font-weight:800}
+.toast{position:fixed;left:16px;right:16px;bottom:calc(96px + env(safe-area-inset-bottom));background:var(--ink);color:#fff;padding:14px 16px;border-radius:14px;z-index:9;font-weight:600;text-align:center}
+ul.pl{margin:6px 0;padding-left:20px}ul.pl li{margin:3px 0;font-size:15px}
+@media(prefers-reduced-motion:no-preference){.bar i{transition:width .3s}}
+</style>
+</head>
+<body>
+<main id="app"></main>
+<nav class="nav" id="nav"></nav>
+<input type="file" id="ph" accept="image/*" capture="environment" hidden>
+<script>
+const KEY='aseoAirbnb.v1';
+const $=s=>document.querySelector(s);
+const uid=()=>Math.random().toString(36).slice(2,9);
+const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const fmt=t=>new Date(t).toLocaleString('es-CO',{day:'2-digit',month:'short',hour:'2-digit',minute:'2-digit'});
+const TYPES=['Salida de huéspedes','Limpieza profunda','Revisión rápida'];
+
+function defaults(){
+  const A=(n,items)=>({id:uid(),name:n,items:items.map(t=>({id:uid(),text:t}))});
+  return{
+    settings:{props:['Apartamento 1'],cleaners:[],email:'',url:'',last:{}},
+    template:[
+      A('Entrada y sala',['Sacar basura y reciclaje','Sacudir muebles y superficies','Aspirar y trapear el piso','Limpiar espejos y vidrios','Acomodar cojines y control remoto']),
+      A('Cocina',['Lavar y guardar la loza','Limpiar estufa y mesón','Limpiar la nevera por dentro (retirar comida olvidada)','Limpiar el microondas','Vaciar y lavar la caneca','Trapear el piso']),
+      A('Habitaciones',['Cambiar sábanas y fundas','Revisar bajo la cama y mesas de noche','Revisar que el colchón y el protector no tengan manchas','Sacudir y aspirar','Revisar el clóset (objetos olvidados)']),
+      A('Baños',['Desinfectar el sanitario','Limpiar ducha y paredes','Dejar lavamanos y grifería brillantes','Cambiar toallas','Reponer papel higiénico y jabón','Quitar cabellos del desagüe','Limpiar el espejo y trapear']),
+      A('Balcón y lavandería',['Barrer y limpiar el balcón','Poner a lavar la ropa sucia','Guardar la ropa de cama limpia']),
+      A('Revisión final',['Luces y electrodomésticos apagados','Ventanas y puertas cerradas','Ventilar y dejar buen aroma','Llaves o cerradura en su sitio'])
+    ],
+    supplies:['Papel higiénico','Jabón de manos','Shampoo y acondicionador','Toallas','Sábanas de repuesto','Bolsas de basura','Café y azúcar','Detergente y desinfectante','Esponjas'].map(n=>({id:uid(),name:n})),
+    reports:[],draft:null
+  };
+}
+function load(){try{const d=JSON.parse(localStorage.getItem(KEY));if(d&&d.template)return d}catch(e){}return defaults()}
+function save(){
+  S.reports.forEach((r,i)=>{if(i>=10&&r.status==='sent'&&r.photos&&r.photos.length)r.photos=[]});
+  S.reports=S.reports.slice(0,60);
+  try{localStorage.setItem(KEY,JSON.stringify(S))}catch(e){toast('Memoria llena: envía y borra reportes viejos')}
+}
+let S=load(),V={n:'home'},awaiting=null,phTarget='general';
+
+/* ---------- cálculos ---------- */
+const tplOf=r=>r.tpl||S.template;
+const mins=r=>Math.max(1,Math.round(((r.end||Date.now())-r.start)/60000));
+const stat=r=>{let d=0,t=0;tplOf(r).forEach(a=>a.items.forEach(i=>{t++;if(r.checks[i.id])d++}));return{d,t,p:t?Math.round(d*100/t):0}};
+const areaStat=(r,a)=>{const d=a.items.filter(i=>r.checks[i.id]).length;return{d,t:a.items.length}};
+const pend=r=>{const o=[];tplOf(r).forEach(a=>a.items.forEach(i=>{if(!r.checks[i.id])o.push(a.name+': '+i.text)}));return o};
+const supOf=r=>r.supList||S.supplies.map(s=>({name:s.name,st:(r.sup||{})[s.id]||'ok'}));
+const lowOf=r=>supOf(r).filter(s=>s.st!=='ok');
+const ST={draft:'En curso',pending:'Por enviar',sent:'Enviado'};
+const byId=id=>S.reports.find(r=>r.id===id);
+
+/* ---------- texto y archivos de reporte ---------- */
+function text(r,short){
+  const s=stat(r),p=pend(r),l=lowOf(r),L=[];
+  L.push(`REPORTE DE ASEO - ${r.property}`);
+  L.push(`Fecha: ${fmt(r.start)} | Duración: ${mins(r)} min`);
+  L.push(`Responsable: ${r.cleaner} | Tipo: ${r.type}`);
+  L.push(`Tareas hechas: ${s.d} de ${s.t} (${s.p}%)`);
+  if(p.length){L.push('Pendientes:');p.slice(0,short?8:99).forEach(x=>L.push('- '+x));if(short&&p.length>8)L.push(`... y ${p.length-8} más`)}
+  if(l.length)L.push('Insumos por reponer: '+l.map(x=>`${x.name} (${x.st})`).join(', '));
+  if(r.damages)L.push('Daños o novedades: '+r.damages);
+  if(r.final)L.push('Comentarios: '+r.final);
+  if((r.photos||[]).length)L.push(`Fotos: ${r.photos.length} (se envían con "Compartir")`);
+  return L.join('\n');
+}
+function csv(r){
+  const q=v=>'"'+String(v??'').replace(/"/g,'""')+'"',R=[];
+  R.push(['Propiedad',r.property],['Responsable',r.cleaner],['Tipo',r.type],['Inicio',fmt(r.start)],['Fin',r.end?fmt(r.end):''],['Duración (min)',mins(r)],['Tareas hechas',stat(r).d+' de '+stat(r).t],[]);
+  R.push(['Área','Tarea','Hecho']);
+  tplOf(r).forEach(a=>a.items.forEach(i=>R.push([a.name,i.text,r.checks[i.id]?'Sí':'No'])));
+  R.push([]);R.push(['Notas por área']);
+  tplOf(r).forEach(a=>{if((r.notes||{})[a.id])R.push([a.name,r.notes[a.id]])});
+  R.push([]);R.push(['Insumo','Estado']);supOf(r).forEach(s=>R.push([s.name,s.st]));
+  R.push([],['Daños o novedades',r.damages||''],['Comentarios finales',r.final||'']);
+  return '\uFEFF'+R.map(x=>x.map(q).join(';')).join('\r\n');
+}
+function histCsv(){
+  const q=v=>'"'+String(v??'').replace(/"/g,'""')+'"';
+  const H=['Fecha','Propiedad','Responsable','Tipo','Minutos','Hechas','Total','% cumplimiento','Pendientes','Insumos por reponer','Novedades','Estado'];
+  const rows=S.reports.map(r=>{const s=stat(r);return[fmt(r.start),r.property,r.cleaner,r.type,mins(r),s.d,s.t,s.p+'%',pend(r).join(' | '),lowOf(r).map(x=>x.name).join(', '),r.damages||'',ST[r.status]]});
+  return '\uFEFF'+[H,...rows].map(x=>x.map(q).join(';')).join('\r\n');
+}
+function dl(name,content,type='text/csv'){const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([content],{type:type+';charset=utf-8'}));a.download=name;document.body.appendChild(a);a.click();a.remove()}
+const slug=r=>(r.property+'-'+new Date(r.start).toISOString().slice(0,10)).toLowerCase().replace(/[^a-z0-9-]+/g,'-');
+function dataFile(d,name){const b=atob(d.split(',')[1]),u=new Uint8Array(b.length);for(let i=0;i<b.length;i++)u[i]=b.charCodeAt(i);return new File([u],name,{type:'image/jpeg'})}
+
+/* ---------- envío ---------- */
+const mark=(list,st)=>{list.forEach(r=>{r.status=st});save();render()};
+function mail(list){
+  const subj=list.length===1?`Reporte de aseo - ${list[0].property} - ${fmt(list[0].start)}`:`Reportes de aseo (${list.length})`;
+  let body=list.map(r=>text(r,true)).join('\n\n----------\n\n');
+  if(body.length>1700)body=body.slice(0,1700)+'\n...(resumen cortado; usa "Compartir" para enviar el archivo completo)';
+  awaiting=list.map(r=>r.id);
+  location.href='mailto:'+encodeURIComponent(S.settings.email||'').replace('%40','@')+'?subject='+encodeURIComponent(subj)+'&body='+encodeURIComponent(body);
+}
+async function share(list){
+  const files=[];
+  list.forEach(r=>{files.push(new File([csv(r)],`aseo-${slug(r)}.csv`,{type:'text/csv'}));(r.photos||[]).slice(0,6).forEach((p,i)=>files.push(dataFile(p.d,`foto-${slug(r)}-${i+1}.jpg`)))});
+  const title=list.length===1?`Reporte de aseo - ${list[0].property}`:`Reportes de aseo (${list.length})`;
+  const msg=list.map(r=>text(r,true)).join('\n\n');
+  try{
+    if(navigator.canShare&&navigator.canShare({files})){await navigator.share({title,text:msg,files})}
+    else if(navigator.share){await navigator.share({title,text:msg})}
+    else{list.forEach(r=>dl(`aseo-${slug(r)}.csv`,csv(r)));toast('Archivo descargado. Envíalo desde tu correo o WhatsApp.');return}
+    mark(list,'sent');toast('Compartido');
+  }catch(e){if(e.name!=='AbortError')toast('No se pudo compartir')}
+}
+async function upload(list,quiet){
+  if(!S.settings.url){if(!quiet)toast('Primero pega el enlace de subida en Ajustes');return false}
+  if(!navigator.onLine){if(!quiet)toast('Sin internet por ahora');return false}
+  try{
+    const data=list.map(r=>({id:r.id,fecha:fmt(r.start),propiedad:r.property,responsable:r.cleaner,tipo:r.type,minutos:mins(r),hechas:stat(r).d,total:stat(r).t,pendientes:pend(r),insumos:lowOf(r),novedades:r.damages||'',comentarios:r.final||'',fotos:(r.photos||[]).length}));
+    await fetch(S.settings.url,{method:'POST',mode:'no-cors',headers:{'Content-Type':'text/plain'},body:JSON.stringify({reportes:data})});
+    mark(list,'sent');toast(`Subido: ${list.length} reporte(s)`);return true;
+  }catch(e){if(!quiet)toast('No se pudo subir. Intenta de nuevo.');return false}
+}
+function autoUp(){const p=S.reports.filter(r=>r.status==='pending');if(p.length&&S.settings.url&&navigator.onLine)upload(p,true)}
+document.addEventListener('visibilitychange',()=>{
+  if(document.visibilityState==='visible'&&awaiting){const ids=awaiting;awaiting=null;setTimeout(()=>{if(confirm('¿Se envió el correo?\nAceptar = marcar como enviado.'))mark(S.reports.filter(r=>ids.includes(r.id)),'sent')},400)}
+});
+addEventListener('online',()=>{render();autoUp()});addEventListener('offline',render);
+
+/* ---------- UI helpers ---------- */
+function toast(m){const t=document.createElement('div');t.className='toast';t.textContent=m;document.body.appendChild(t);setTimeout(()=>t.remove(),3200)}
+function go(n,p={}){V={n,...p};render();scrollTo(0,0)}
+const ico={
+  home:'<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11l9-8 9 8v10H3z"/><path d="M9 21v-7h6v7"/></svg>',
+  hist:'<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="3" width="16" height="18" rx="2"/><path d="M8 8h8M8 12h8M8 16h5"/></svg>',
+  set:'<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M5 5l2 2M17 17l2 2M19 5l-2 2M7 17l-2 2"/></svg>'
+};
+function navHtml(){
+  const cur=['home','start','check','area','sup','news','finish'].includes(V.n)?'home':['hist','rep'].includes(V.n)?'hist':'set';
+  return [['home','Inicio','home'],['hist','Historial','hist'],['set','Ajustes','set']].map(([k,l,i])=>`<button class="${cur===k?'on':''}" data-a="go" data-v="${k}">${ico[i]}${l}</button>`).join('');
+}
+const hdr=(t,back)=>`<div class="top"><button class="back" data-a="go" data-v="${back}" aria-label="Volver">‹</button><h1>${t}</h1></div>`;
+const ring=p=>{const c=2*Math.PI*36;return`<div class="ring"><svg width="84" height="84" viewBox="0 0 84 84"><circle cx="42" cy="42" r="36" fill="none" stroke="#E3EDEF" stroke-width="9"/><circle cx="42" cy="42" r="36" fill="none" stroke="${p===100?'#2E9E6B':'#0E8F9C'}" stroke-width="9" stroke-linecap="round" stroke-dasharray="${c}" stroke-dashoffset="${c*(1-p/100)}" transform="rotate(-90 42 42)"/></svg><b>${p}%</b></div>`};
+const badge=r=>`<span class="badge ${r.status==='sent'?'sent':r.status==='draft'?'draft':''}">${ST[r.status]}</span>`;
+
+/* ---------- vistas ---------- */
+function vHome(){
+  const d=S.draft,pe=S.reports.filter(r=>r.status==='pending'),on=navigator.onLine;
+  let h=`<div class="hero"><h1>Check-list de aseo</h1><small>${esc(S.settings.props.join(' · ')||'Agrega tu propiedad en Ajustes')}</small><span class="chip ${on?'on':''}"><i></i>${on?'Con internet':'Sin internet · todo se guarda en el celular'}</span></div>`;
+  if(pe.length){
+    h+=`<div class="card ${on?'warn':'info'}"><h3>${pe.length} reporte(s) por enviar</h3><p class="mute">${on?'Ya tienes internet. Envíalos ahora.':'Quedan guardados. Cuando tengas internet podrás enviarlos.'}</p>
+    <button class="btn sm" data-a="mailAll">Enviar por correo</button><button class="btn sm sec" data-a="shareAll">Compartir</button>${S.settings.url?'<button class="btn sm sec" data-a="upAll">Subir</button>':''}</div>`;
+  }
+  if(d){const s=stat(d);h+=`<div class="card"><h3>Limpieza en curso</h3><p class="mute">${esc(d.property)} · ${esc(d.cleaner)} · ${s.d} de ${s.t} tareas</p><button class="btn" data-a="go" data-v="check">Continuar</button><button class="btn ghost" data-a="discard">Descartar esta limpieza</button></div>`}
+  else h+=`<button class="btn" style="font-size:19px;padding:20px" data-a="go" data-v="start">Iniciar limpieza</button>`;
+  const last=S.reports.slice(0,3);
+  if(last.length){h+='<h2>Últimos reportes</h2>'+last.map(r=>`<button class="area" data-a="rep" data-id="${r.id}"><b><span>${esc(r.property)}</span>${badge(r)}</b><span class="mute">${fmt(r.start)} · ${esc(r.cleaner)} · ${stat(r).p}%</span></button>`).join('')}
+  return h;
+}
+function vStart(){
+  const s=S.settings,l=s.last||{};
+  const opt=(arr,sel)=>arr.map(x=>`<option ${x===sel?'selected':''}>${esc(x)}</option>`).join('');
+  return hdr('Nueva limpieza','home')+`
+  <label for="f-cl">¿Quién limpia?</label>
+  ${s.cleaners.length?`<select id="f-cl">${opt(s.cleaners,l.cleaner)}<option value="__o">Otra persona…</option></select><input id="f-cl2" placeholder="Escribe el nombre" style="display:none;margin-top:8px">`:`<input id="f-cl" placeholder="Tu nombre">`}
+  <label for="f-pr">Propiedad</label>
+  <select id="f-pr">${opt(s.props,l.property)}</select>
+  <label for="f-ty">Tipo de limpieza</label>
+  <select id="f-ty">${opt(TYPES,l.type)}</select>
+  <button class="btn" style="margin-top:22px" data-a="begin">Empezar</button>`;
+}
+function vCheck(){
+  const r=S.draft;if(!r)return go('home');const s=stat(r);
+  let h=hdr(esc(r.property),'home')+`<div class="ringwrap">${ring(s.p)}<div><h3>${s.d} de ${s.t} tareas</h3><p class="mute">${esc(r.cleaner)} · ${esc(r.type)}</p></div></div><h2>Áreas</h2>`;
+  h+=S.template.map(a=>{const t=areaStat(r,a),full=t.d===t.t&&t.t>0;return`<button class="area" data-a="area" data-id="${a.id}"><b><span>${esc(a.name)}</span><span style="color:${full?'var(--ok)':'var(--mute)'}">${full?'✓ ':''}${t.d}/${t.t}</span></b><div class="bar ${full?'full':''}"><i style="width:${t.t?t.d*100/t.t:0}%"></i></div></button>`}).join('');
+  h+=`<h2>Además</h2><button class="area" data-a="go" data-v="sup"><b><span>Insumos</span><span class="mute">${lowOf(r).length?lowOf(r).length+' por reponer':'Todo bien'}</span></b></button>
+  <button class="area" data-a="go" data-v="news"><b><span>Daños, novedades y fotos</span><span class="mute">${(r.photos||[]).length} foto(s)</span></b></button>
+  <button class="btn" style="margin-top:20px" data-a="go" data-v="finish">Terminar limpieza</button>`;
+  return h;
+}
+function vArea(){
+  const r=S.draft,a=S.template.find(x=>x.id===V.id);if(!r||!a)return go('check');
+  const t=areaStat(r,a),ph=(r.photos||[]).map((p,i)=>({...p,i})).filter(p=>p.area===a.id);
+  return hdr(esc(a.name),'check')+`<p class="mute">${t.d} de ${t.t} hechas</p>`+
+  a.items.map(i=>`<button class="row ${r.checks[i.id]?'on':''}" data-a="tog" data-id="${i.id}"><span class="box">✓</span><span>${esc(i.text)}</span></button>`).join('')+
+  `<button class="btn sm sec" data-a="allArea" data-v="1">Marcar todo</button><button class="btn sm ghost" data-a="allArea" data-v="0">Desmarcar todo</button>
+  <label for="nt">Nota de esta área (opcional)</label><textarea id="nt" data-b="note" placeholder="Ej: mancha en la alfombra">${esc((r.notes||{})[a.id]||'')}</textarea>
+  <h2>Fotos</h2><div class="photos">${ph.map(p=>`<div><img src="${p.d}" alt="Foto"><button data-a="dph" data-i="${p.i}" aria-label="Borrar foto">×</button></div>`).join('')}</div>
+  <button class="btn sec" data-a="photo" data-v="${a.id}">Tomar foto</button>
+  <button class="btn" data-a="go" data-v="check">Listo</button>`;
+}
+function vSup(){
+  const r=S.draft;if(!r)return go('home');
+  return hdr('Insumos','check')+'<p class="mute">Marca lo que haya que reponer.</p>'+S.supplies.map(s=>{const v=(r.sup||{})[s.id]||'ok';return`<div class="card"><h3>${esc(s.name)}</h3><div class="seg" style="margin-top:10px">${[['ok','Bien'],['poco','Poco'],['agotado','Se acabó']].map(([k,l])=>`<button class="${v===k?'on '+k:''}" data-a="sup" data-id="${s.id}" data-v="${k}">${l}</button>`).join('')}</div></div>`}).join('')+`<button class="btn" data-a="go" data-v="check">Listo</button>`;
+}
+function vNews(){
+  const r=S.draft;if(!r)return go('home');
+  const ph=(r.photos||[]).map((p,i)=>({...p,i})).filter(p=>p.area==='general');
+  return hdr('Novedades','check')+`<label for="dm">Daños, faltantes o cosas raras</label><textarea id="dm" data-b="damages" placeholder="Ej: se rompió un vaso, falta un control">${esc(r.damages||'')}</textarea>
+  <h2>Fotos generales</h2><p class="mute">Toma fotos de daños o del estado final. Máximo 6 en total.</p>
+  <div class="photos">${ph.map(p=>`<div><img src="${p.d}" alt="Foto"><button data-a="dph" data-i="${p.i}" aria-label="Borrar foto">×</button></div>`).join('')}</div>
+  <button class="btn sec" data-a="photo" data-v="general">Tomar foto</button><button class="btn" data-a="go" data-v="check">Listo</button>`;
+}
+function vFinish(){
+  const r=S.draft;if(!r)return go('home');const p=pend(r),s=stat(r);
+  return hdr('Terminar','check')+`<div class="ringwrap">${ring(s.p)}<div><h3>${s.d} de ${s.t} tareas</h3><p class="mute">${mins(r)} min</p></div></div>`+
+  (p.length?`<div class="card warn"><h3>Faltan ${p.length} tarea(s)</h3><ul class="pl">${p.slice(0,12).map(x=>`<li>${esc(x)}</li>`).join('')}${p.length>12?`<li>y ${p.length-12} más…</li>`:''}</ul><p class="mute">Puedes terminar así, pero quedarán anotadas como pendientes.</p></div>`:`<div class="card info"><h3>Todo completo ✓</h3></div>`)+
+  `<label for="fn">Comentarios finales (opcional)</label><textarea id="fn" data-b="final">${esc(r.final||'')}</textarea>
+  <button class="btn" data-a="finish">Terminar y guardar</button>`;
+}
+function vRep(){
+  const r=byId(V.id);if(!r)return go('hist');const p=pend(r),l=lowOf(r),s=stat(r);
+  return hdr('Reporte','hist')+`<div class="card"><b>${esc(r.property)}</b> ${badge(r)}<p class="mute">${fmt(r.start)} · ${mins(r)} min<br>${esc(r.cleaner)} · ${esc(r.type)}</p>
+  <div class="bar ${s.p===100?'full':''}"><i style="width:${s.p}%"></i></div><p><b>${s.d} de ${s.t}</b> tareas (${s.p}%)</p></div>
+  ${p.length?`<div class="card warn"><h3>Pendientes</h3><ul class="pl">${p.map(x=>`<li>${esc(x)}</li>`).join('')}</ul></div>`:''}
+  ${l.length?`<div class="card"><h3>Insumos por reponer</h3><ul class="pl">${l.map(x=>`<li>${esc(x.name)} — ${x.st}</li>`).join('')}</ul></div>`:''}
+  ${r.damages||r.final?`<div class="card"><h3>Novedades</h3><p>${esc(r.damages||'')}</p><p class="mute">${esc(r.final||'')}</p></div>`:''}
+  ${(r.photos||[]).length?`<div class="photos">${r.photos.map(x=>`<img src="${x.d}" alt="Foto">`).join('')}</div>`:''}
+  <h2>Enviar</h2>
+  <button class="btn" data-a="mail" data-id="${r.id}">Enviar por correo</button>
+  <button class="btn sec" data-a="share" data-id="${r.id}">Compartir con fotos y archivo (WhatsApp, Drive…)</button>
+  ${S.settings.url?`<button class="btn sec" data-a="up" data-id="${r.id}">Subir ahora</button>`:''}
+  <button class="btn ghost" data-a="csv" data-id="${r.id}">Descargar archivo para Excel</button>
+  <button class="btn ghost" data-a="togSent" data-id="${r.id}">${r.status==='sent'?'Marcar como por enviar':'Marcar como enviado'}</button>
+  <button class="btn bad" data-a="delrep" data-id="${r.id}">Borrar reporte</button>`;
+}
+function vHist(){
+  return `<div class="top"><h1>Historial</h1></div>`+(S.reports.length?S.reports.map(r=>`<button class="area" data-a="rep" data-id="${r.id}"><b><span>${esc(r.property)}</span>${badge(r)}</b><span class="mute">${fmt(r.start)} · ${esc(r.cleaner)} · ${stat(r).p}%</span></button>`).join('')+`<button class="btn sec" data-a="histcsv">Descargar historial para Excel</button>`:`<div class="card info"><p>Aquí verás las limpiezas terminadas.</p></div>`);
+}
+function vSet(){
+  const s=S.settings;
+  const list=(arr,k)=>arr.map((x,i)=>`<div class="line"><input value="${esc(x)}" data-s="${k}:${i}"><button class="x" data-a="del${k}" data-i="${i}" aria-label="Quitar">×</button></div>`).join('');
+  return `<div class="top"><h1>Ajustes</h1></div>
+  <div class="card info"><b>Instalar en el celular</b><p class="mute sm">Abre esta página en Chrome (Android) o Safari (iPhone) → menú → “Agregar a pantalla de inicio”. Después funciona sin internet.</p></div>
+  <h2>Envío de reportes</h2>
+  <label for="em">Correo del administrador</label><input id="em" type="email" inputmode="email" data-s="email" value="${esc(s.email)}" placeholder="admin@correo.com">
+  <p class="mute sm">El botón “Enviar por correo” abre el correo que ya tienes configurado en el celular.</p>
+  <label for="ur">Enlace de subida automática (opcional)</label><input id="ur" data-s="url" value="${esc(s.url)}" placeholder="https://script.google.com/…">
+  <p class="mute sm">Si lo pegas, los reportes pendientes se suben solos cuando el celular recupera internet.</p>
+  <h2>Propiedades</h2>${list(s.props,'P')}<button class="btn sm sec" data-a="addP">+ Agregar</button>
+  <h2>Personal de aseo</h2>${list(s.cleaners,'C')}<button class="btn sm sec" data-a="addC">+ Agregar</button>
+  <h2>Insumos a revisar</h2>${S.supplies.map((x,i)=>`<div class="line"><input value="${esc(x.name)}" data-s="S:${i}"><button class="x" data-a="delS" data-i="${i}" aria-label="Quitar">×</button></div>`).join('')}<button class="btn sm sec" data-a="addS">+ Agregar</button>
+  <h2>Check-list</h2><p class="mute sm">Cambia, agrega o quita áreas y tareas. Los reportes ya guardados no cambian.</p>
+  ${S.template.map(a=>`<div class="card"><div class="line"><input value="${esc(a.name)}" data-t="a:${a.id}" style="font-weight:800"><button class="x" data-a="delA" data-id="${a.id}" aria-label="Quitar área">×</button></div>
+   ${a.items.map(i=>`<div class="line"><input value="${esc(i.text)}" data-t="i:${a.id}:${i.id}"><button class="x" data-a="delI" data-id="${a.id}" data-j="${i.id}" aria-label="Quitar tarea">×</button></div>`).join('')}
+   <button class="btn sm sec" data-a="addI" data-id="${a.id}">+ Tarea</button></div>`).join('')}
+  <button class="btn sec" data-a="addA">+ Agregar área</button>
+  <button class="btn ghost" data-a="reset">Restaurar check-list original</button>`;
+}
+const VIEWS={home:vHome,start:vStart,check:vCheck,area:vArea,sup:vSup,news:vNews,finish:vFinish,rep:vRep,hist:vHist,set:vSet};
+function render(){
+  const el=$('#app'),y=scrollY;
+  el.innerHTML=VIEWS[V.n]();$('#nav').innerHTML=navHtml();
+  if(V.keep)scrollTo(0,y);V.keep=false;
+}
+
+/* ---------- acciones ---------- */
+const A={
+  go(e){const v=e.dataset.v;go(v==='area'?'check':v)},
+  begin(){
+    let cl=$('#f-cl').value;if(cl==='__o')cl=($('#f-cl2').value||'').trim();cl=(cl||'').trim();
+    if(!cl){toast('Escribe quién limpia');return}
+    const pr=$('#f-pr').value,ty=$('#f-ty').value;
+    if(!pr){toast('Agrega una propiedad en Ajustes');return}
+    S.settings.last={cleaner:cl,property:pr,type:ty};
+    if(!S.settings.cleaners.includes(cl))S.settings.cleaners.push(cl);
+    S.draft={id:uid(),status:'draft',cleaner:cl,property:pr,type:ty,start:Date.now(),checks:{},notes:{},sup:{},photos:[],damages:'',final:''};
+    save();go('check');
+  },
+  area(e){go('area',{id:e.dataset.id})},
+  tog(e){const r=S.draft,id=e.dataset.id;r.checks[id]=!r.checks[id];save();V.keep=true;render()},
+  allArea(e){const a=S.template.find(x=>x.id===V.id);a.items.forEach(i=>S.draft.checks[i.id]=e.dataset.v==='1');save();V.keep=true;render()},
+  sup(e){S.draft.sup[e.dataset.id]=e.dataset.v;save();V.keep=true;render()},
+  photo(e){if((S.draft.photos||[]).length>=6){toast('Máximo 6 fotos');return}phTarget=e.dataset.v;$('#ph').click()},
+  dph(e){S.draft.photos.splice(+e.dataset.i,1);save();V.keep=true;render()},
+  discard(){if(confirm('¿Descartar esta limpieza? Se pierde lo marcado.')){S.draft=null;save();render()}},
+  finish(){
+    const r=S.draft;r.end=Date.now();r.tpl=JSON.parse(JSON.stringify(S.template));r.supList=supOf(r);r.status='pending';
+    S.reports.unshift(r);S.draft=null;save();autoUp();go('rep',{id:r.id});toast('Limpieza guardada');
+  },
+  rep(e){go('rep',{id:e.dataset.id})},
+  mail(e){mail([byId(e.dataset.id)])},
+  share(e){share([byId(e.dataset.id)])},
+  up(e){upload([byId(e.dataset.id)])},
+  csv(e){const r=byId(e.dataset.id);dl(`aseo-${slug(r)}.csv`,csv(r))},
+  togSent(e){const r=byId(e.dataset.id);mark([r],r.status==='sent'?'pending':'sent')},
+  delrep(e){if(confirm('¿Borrar este reporte? No se puede deshacer.')){S.reports=S.reports.filter(r=>r.id!==e.dataset.id);save();go('hist')}},
+  mailAll(){mail(S.reports.filter(r=>r.status==='pending'))},
+  shareAll(){share(S.reports.filter(r=>r.status==='pending'))},
+  upAll(){upload(S.reports.filter(r=>r.status==='pending'))},
+  histcsv(){dl('historial-aseo.csv',histCsv())},
+  addP(){S.settings.props.push('');save();V.keep=true;render()},
+  addC(){S.settings.cleaners.push('');save();V.keep=true;render()},
+  addS(){S.supplies.push({id:uid(),name:''});save();V.keep=true;render()},
+  delP(e){S.settings.props.splice(+e.dataset.i,1);save();V.keep=true;render()},
+  delC(e){S.settings.cleaners.splice(+e.dataset.i,1);save();V.keep=true;render()},
+  delS(e){S.supplies.splice(+e.dataset.i,1);save();V.keep=true;render()},
+  addA(){S.template.push({id:uid(),name:'Nueva área',items:[]});save();V.keep=true;render()},
+  addI(e){S.template.find(a=>a.id===e.dataset.id).items.push({id:uid(),text:''});save();V.keep=true;render()},
+  delA(e){if(confirm('¿Quitar esta área con todas sus tareas?')){S.template=S.template.filter(a=>a.id!==e.dataset.id);save();V.keep=true;render()}},
+  delI(e){const a=S.template.find(a=>a.id===e.dataset.id);a.items=a.items.filter(i=>i.id!==e.dataset.j);save();V.keep=true;render()},
+  reset(){if(confirm('¿Restaurar áreas y tareas originales?')){S.template=defaults().template;save();V.keep=true;render()}}
+};
+document.addEventListener('click',ev=>{const e=ev.target.closest('[data-a]');if(e&&A[e.dataset.a])A[e.dataset.a](e)});
+document.addEventListener('change',ev=>{
+  const t=ev.target;
+  if(t.id==='f-cl'&&t.tagName==='SELECT'){$('#f-cl2').style.display=t.value==='__o'?'block':'none'}
+  if(t.dataset.s){const[k,i]=t.dataset.s.split(':');const v=t.value.trim();
+    if(k==='email'||k==='url')S.settings[k]=t.dataset.s==='email'?v:v;
+    else if(k==='P')S.settings.props[+i]=v;else if(k==='C')S.settings.cleaners[+i]=v;else if(k==='S')S.supplies[+i].name=v;
+    S.settings.props=S.settings.props.filter(Boolean);S.settings.cleaners=S.settings.cleaners.filter(Boolean);save()}
+  if(t.dataset.t){const p=t.dataset.t.split(':');const a=S.template.find(x=>x.id===p[1]);
+    if(p[0]==='a')a.name=t.value.trim()||a.name;else{const it=a.items.find(x=>x.id===p[2]);it.text=t.value.trim()||it.text}save()}
+});
+document.addEventListener('input',ev=>{
+  const t=ev.target;if(!t.dataset.b||!S.draft)return;
+  if(t.dataset.b==='note'){S.draft.notes=S.draft.notes||{};S.draft.notes[V.id]=t.value}else S.draft[t.dataset.b]=t.value;
+  save();
+});
+$('#ph').addEventListener('change',async ev=>{
+  const f=ev.target.files[0];ev.target.value='';if(!f||!S.draft)return;
+  const d=await new Promise(res=>{const rd=new FileReader();rd.onload=()=>{const im=new Image();im.onload=()=>{const k=Math.min(1,800/Math.max(im.width,im.height)),c=document.createElement('canvas');c.width=im.width*k;c.height=im.height*k;c.getContext('2d').drawImage(im,0,0,c.width,c.height);res(c.toDataURL('image/jpeg',.6))};im.src=rd.result};rd.readAsDataURL(f)});
+  S.draft.photos.push({area:phTarget,d});save();V.keep=true;render();
+});
+
+if('serviceWorker' in navigator)addEventListener('load',()=>navigator.serviceWorker.register('service-worker.js').catch(()=>{}));
+render();autoUp();
+</script>
+</body>
+</html>
