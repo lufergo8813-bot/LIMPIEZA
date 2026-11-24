@@ -89,7 +89,7 @@ const TYPES=['Salida de huéspedes','Limpieza profunda','Revisión rápida'];
 function defaults(){
   const A=(n,items)=>({id:uid(),name:n,items:items.map(t=>({id:uid(),text:t}))});
   return{
-    settings:{props:['Apartamento 1'],cleaners:[],email:MAILS,url:'',last:{},pin:'8888'},
+    settings:{props:['La Buena Mesa','Corazón Envigado','Kiwi Apartamentos','Gascuña'],cleaners:['Ayarith'],mstaff:[],email:MAILS,url:'',last:{},pin:'8888'},
     template:[
       A('Entrada y sala',['Sacar basura y reciclaje','Sacudir muebles y superficies','Aspirar y trapear el piso','Limpiar espejos y vidrios','Acomodar cojines y control remoto']),
       A('Cocina',['Lavar y guardar la loza','Limpiar estufa y mesón','Limpiar la nevera por dentro (retirar comida olvidada)','Limpiar el microondas','Vaciar y lavar la caneca','Trapear el piso']),
@@ -102,7 +102,7 @@ function defaults(){
     reports:[],draft:null
   };
 }
-function load(){try{const d=JSON.parse(localStorage.getItem(KEY));if(d&&d.template){if(!d.settings.email)d.settings.email=MAILS;return d}}catch(e){}return defaults()}
+function load(){try{const d=JSON.parse(localStorage.getItem(KEY));if(d&&d.template){if(!d.settings.email)d.settings.email=MAILS;if(!d.v2){d.v2=1;if(d.settings.props.length===1&&d.settings.props[0]==='Apartamento 1')d.settings.props=defaults().settings.props;if(!d.settings.cleaners.includes('Ayarith'))d.settings.cleaners.unshift('Ayarith')}return d}}catch(e){}return defaults()}
 function save(){
   S.reports.forEach((r,i)=>{if(i>=10&&r.status==='sent'&&r.photos&&r.photos.length)r.photos=[]});
   S.reports=S.reports.slice(0,60);
@@ -171,12 +171,15 @@ async function share(list){
   const files=[];
   list.forEach(r=>{files.push(new File([csv(r)],`aseo-${slug(r)}.csv`,{type:'text/csv'}));(r.photos||[]).slice(0,6).forEach((p,i)=>files.push(dataFile(p.d,`foto-${slug(r)}-${i+1}.jpg`)))});
   const title=list.length===1?`Reporte de aseo - ${list[0].property}`:`Reportes de aseo (${list.length})`;
-  const msg=list.map(r=>text(r,true)).join('\n\n');
+  const mails=(S.settings.email||'').split(/[,;\s]+/).filter(Boolean).join(', ');
+  const msg=(mails?'Para: '+mails+'\n\n':'')+list.map(r=>text(r,true)).join('\n\n');
+  let copied=false;
+  try{if(mails&&navigator.clipboard){navigator.clipboard.writeText(mails).catch(()=>{});copied=true}}catch(e){}
   try{
     if(navigator.canShare&&navigator.canShare({files})){await navigator.share({title,text:msg,files})}
     else if(navigator.share){await navigator.share({title,text:msg})}
     else{list.forEach(r=>dl(`aseo-${slug(r)}.csv`,csv(r)));toast('Archivo descargado. Envíalo desde tu correo o WhatsApp.');return}
-    mark(list,'sent');toast('Compartido');
+    mark(list,'sent');toast(copied?'Compartido. Si usaste Gmail, pega los correos en “Para”.':'Compartido');
   }catch(e){if(e.name!=='AbortError')toast('No se pudo compartir')}
 }
 async function upload(list,quiet){
@@ -198,7 +201,7 @@ addEventListener('online',()=>{render();autoUp()});addEventListener('offline',re
 function toast(m){const t=document.createElement('div');t.className='toast';t.textContent=m;document.body.appendChild(t);setTimeout(()=>t.remove(),3200)}
 function go(n,p={}){
   if(ADMIN.includes(n)&&!unlocked){V={n:'pin',to:n};pinBuf='';render();scrollTo(0,0);return}
-  if(!ADMIN.includes(n)&&n!=='rep')unlocked=false;
+  if(!ADMIN.includes(n)&&n!=='rep'&&n!=='pd')unlocked=false;
   V={n,...p};render();scrollTo(0,0);
 }
 let hiddenAt=0;
@@ -228,10 +231,13 @@ function vHome(){
     <ul class="pl">${pe.map(r=>`<li>${esc(r.property)} · ${fmt(r.start)} · ${esc(r.cleaner)}</li>`).join('')}</ul>
     <p class="mute">${on?'Toca el botón para enviarlo por correo.':'Sin internet: queda guardado en el celular. Envíalo cuando tengas internet.'}</p>
     <button class="btn" data-a="mailAll">Enviar por correo</button>
-    <button class="btn sm sec" data-a="shareAll">Compartir con fotos</button>${S.settings.url?'<button class="btn sm sec" data-a="upAll">Subir</button>':''}</div>`;
+    <button class="btn sec" data-a="shareAll">Enviar con fotos</button>
+    <p class="mute sm">Con fotos: elige Gmail (o WhatsApp). Los correos de destino quedan copiados: en Gmail, mantén presionado “Para” y toca Pegar.</p>${S.settings.url?'<button class="btn sm sec" data-a="upAll">Subir</button>':''}</div>`;
   }
   if(d){const s=stat(d);h+=`<div class="card"><h3>Limpieza en curso</h3><p class="mute">${esc(d.property)} · ${esc(d.cleaner)} · ${s.d} de ${s.t} tareas</p><button class="btn" data-a="go" data-v="check">Continuar</button><button class="btn ghost" data-a="discard">Descartar esta limpieza</button></div>`}
   else h+=`<button class="btn" style="font-size:19px;padding:20px" data-a="go" data-v="start">Iniciar limpieza</button>`;
+  const np=S.pend.filter(t=>!t.done).length;
+  h+=`<h2>Más</h2><button class="area" data-a="go" data-v="mn"><b><span>Mantenimiento de la propiedad</span></b></button><button class="area" data-a="go" data-v="pd"><b><span>Pendientes de mantenimiento</span><span class="mute">${np}</span></b></button><button class="area" data-a="go" data-v="bk"><b><span>Mantenimiento de bicicletas</span></b></button>`;
   return h;
 }
 function vStart(){
@@ -295,7 +301,7 @@ function vRep(){
   ${(r.photos||[]).length?`<div class="photos">${r.photos.map(x=>`<img src="${x.d}" alt="Foto">`).join('')}</div>`:''}
   <h2>Enviar</h2>
   <button class="btn" data-a="mail" data-id="${r.id}">Enviar por correo</button>
-  <button class="btn sec" data-a="share" data-id="${r.id}">Compartir con fotos y archivo (WhatsApp, Drive…)</button>
+  <button class="btn sec" data-a="share" data-id="${r.id}">Enviar con fotos y archivo (Gmail, WhatsApp, Drive…)</button>
   ${S.settings.url?`<button class="btn sec" data-a="up" data-id="${r.id}">Subir ahora</button>`:''}
   <button class="btn ghost" data-a="csv" data-id="${r.id}">Descargar archivo para Excel</button>
   ${unlocked?`<button class="btn ghost" data-a="togSent" data-id="${r.id}">${r.status==='sent'?'Marcar como por enviar':'Marcar como enviado'}</button>
@@ -319,6 +325,7 @@ function vSet(){
   <p class="mute sm">Separa los correos con coma. El botón “Enviar por correo” abre el correo que ya está configurado en el celular y llena estos destinatarios.</p>
   <label for="ur">Enlace de subida automática (opcional)</label><input id="ur" data-s="url" value="${esc(s.url)}" placeholder="https://script.google.com/…">
   <p class="mute sm">Si lo pegas, los reportes pendientes se suben solos cuando el celular recupera internet.</p>
+  <h2>Mantenimiento</h2><label>Personal de mantenimiento (separados por coma)</label><input data-x="mstaff" value="${esc(S.settings.mstaff.join(', '))}"><label>Bicicletas (separadas por coma)</label><input data-x="bikes" value="${esc(S.bikes.join(', '))}">
   <h2>Clave de acceso</h2><button class="btn sec" data-a="chpin">Cambiar clave</button>
   <h2>Propiedades</h2>${list(s.props,'P')}<button class="btn sm sec" data-a="addP">+ Agregar</button>
   <h2>Personal de aseo</h2>${list(s.cleaners,'C')}<button class="btn sm sec" data-a="addC">+ Agregar</button>
@@ -333,7 +340,7 @@ function vSet(){
 const VIEWS={pin:vPin,home:vHome,start:vStart,check:vCheck,area:vArea,sup:vSup,news:vNews,finish:vFinish,rep:vRep,hist:vHist,set:vSet};
 function render(){
   const el=$('#app'),y=scrollY;
-  el.innerHTML=VIEWS[V.n]();$('#nav').innerHTML=navHtml();
+  el.innerHTML=VIEWS[V.n]();$('#nav').innerHTML=navHtml();if(V.n==='bk')bkInit();
   if(V.keep)scrollTo(0,y);V.keep=false;
 }
 
@@ -420,6 +427,113 @@ $('#ph').addEventListener('change',async ev=>{
   const d=await new Promise(res=>{const rd=new FileReader();rd.onload=()=>{const im=new Image();im.onload=()=>{const k=Math.min(1,800/Math.max(im.width,im.height)),c=document.createElement('canvas');c.width=im.width*k;c.height=im.height*k;c.getContext('2d').drawImage(im,0,0,c.width,c.height);res(c.toDataURL('image/jpeg',.6))};im.src=rd.result};rd.readAsDataURL(f)});
   S.draft.photos.push({area:phTarget,d});save();V.keep=true;render();
 });
+
+
+/* ===== MANTENIMIENTO / BICICLETAS / PENDIENTES ===== */
+S.pend=S.pend||[];S.mreports=S.mreports||[];S.bikelogs=S.bikelogs||[];S.bikes=S.bikes||['Bici 1','Bici 2'];S.settings.mstaff=S.settings.mstaff||[];
+const shot=f=>new Promise(res=>{const r=new FileReader();r.onload=()=>{const im=new Image();im.onload=()=>{const k=Math.min(1,700/Math.max(im.width,im.height)),c=document.createElement('canvas');c.width=im.width*k;c.height=im.height*k;c.getContext('2d').drawImage(im,0,0,c.width,c.height);res({d:c.toDataURL('image/jpeg',.6),w:c.width,h:c.height})};im.src=r.result};r.readAsDataURL(f)});
+const ph2=document.createElement('input');ph2.type='file';ph2.accept='image/*';ph2.id='ph2';ph2.hidden=true;ph2.setAttribute('capture','environment');document.body.appendChild(ph2);let pt=null;
+ph2.addEventListener('change',async()=>{const f=ph2.files[0];ph2.value='';if(!f||!pt)return;pt(await shot(f));save();V.keep=true;render()});
+const imgs=(a,k,id)=>`<div class="photos">${a.map((p,i)=>`<div><img src="${p.d}" alt=""><button data-a="${k}" data-id="${id||''}" data-i="${i}" aria-label="Borrar">×</button></div>`).join('')}</div>`;
+const lat=s=>String(s).replace(/[’‘]/g,"'").replace(/[“”]/g,'"').replace(/[–—]/g,'-').replace(/…/g,'...').replace(/[^\x00-\xff]/g,'?');
+const pe=s=>s.replace(/([\\()])/g,'\\$1');
+function mkPDF(items){
+  const W=595,H=842,M=50,P=[[]],I=[];let y=H-64;const np=()=>{P.push([]);y=H-64},cur=()=>P[P.length-1];
+  items.forEach(it=>{
+    if(it.img){let w=Math.min(220,it.w),hh=w*it.h/it.w;if(hh>190){hh=190;w=hh*it.w/it.h}if(y-hh<60)np();y-=hh;I.push({b:atob(it.img.split(',')[1]),w:it.w,h:it.h});cur().push('q '+w.toFixed(0)+' 0 0 '+hh.toFixed(0)+' '+M+' '+y.toFixed(0)+' cm /I'+I.length+' Do Q');y-=10;return}
+    const fs=it.s||10,mc=Math.floor((W-2*M)/(fs*(it.b?.57:.53)));let cl='';const ls=[];
+    lat(it.t).split(/\s+/).forEach(w=>{if((cl+' '+w).trim().length>mc){ls.push(cl);cl=w}else cl=(cl+' '+w).trim()});ls.push(cl);y-=it.g||0;
+    ls.forEach(l=>{if(y-fs*1.45<55)np();y-=fs*1.45;cur().push('BT /F'+(it.b?2:1)+' '+fs+' Tf '+(it.c||'0.1 0.1 0.15')+' rg '+M+' '+y.toFixed(0)+' Td ('+pe(l)+') Tj ET')});
+  });
+  const n=P.length,k=I.length;let o='%PDF-1.4\n%\xE2\xE3\xCF\xD3\n';const of=[];const add=(id,b)=>{of[id]=o.length;o+=id+' 0 obj\n'+b+'\nendobj\n'};
+  add(1,'<< /Type /Catalog /Pages 2 0 R >>');add(2,'<< /Type /Pages /Kids ['+P.map((_,i)=>(6+k+2*i)+' 0 R').join(' ')+'] /Count '+n+' >>');
+  add(3,'<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica /Encoding /WinAnsiEncoding >>');add(4,'<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica-Bold /Encoding /WinAnsiEncoding >>');
+  I.forEach((m,i)=>add(5+i,'<< /Type /XObject /Subtype /Image /Width '+m.w+' /Height '+m.h+' /ColorSpace /DeviceRGB /BitsPerComponent 8 /Filter /DCTDecode /Length '+m.b.length+' >>\nstream\n'+m.b+'\nendstream'));
+  const xo=I.map((_,i)=>'/I'+(i+1)+' '+(5+i)+' 0 R').join(' ');
+  P.forEach((p,i)=>{const s='0.12 0.18 0.28 rg 0 832 595 10 re f 0.87 0.65 0.18 rg 0 829 595 3 re f\n'+p.join('\n')+'\nBT /F1 8 Tf 0.4 0.43 0.5 rg 50 28 Td (Feri Stays  |  '+(i+1)+'/'+n+') Tj ET\n';
+    add(5+k+2*i,'<< /Length '+s.length+' >>\nstream\n'+s+'endstream');add(6+k+2*i,'<< /Type /Page /Parent 2 0 R /MediaBox [0 0 595 842] /Resources << /Font << /F1 3 0 R /F2 4 0 R >> /XObject << '+xo+' >> >> /Contents '+(5+k+2*i)+' 0 R >>')});
+  const N=5+k+2*n,x0=o.length;let x='xref\n0 '+(N+1)+'\n0000000000 65535 f \n';for(let i=1;i<=N;i++)x+=String(of[i]).padStart(10,'0')+' 00000 n \n';
+  return o+x+'trailer\n<< /Size '+(N+1)+' /Root 1 0 R >>\nstartxref\n'+x0+'\n%%EOF';
+}
+const NV='0.12 0.18 0.28',GD='0.54 0.39 0.06';
+function mnPDF(r){const L=[{t:'Reporte de mantenimiento',s:17,b:1,c:NV},{t:'Feri Stays',s:11,b:1,c:GD,g:2},{t:'Propiedad: '+r.prop,s:12,b:1,g:8},{t:'Realizado por: '+r.who,s:11},{t:'Fecha: '+fmt(r.start)+'  -  '+fmt(r.end),s:10}];
+  r.items.forEach((i,n)=>{L.push({t:(n+1)+'. '+i.text,s:12,b:1,c:NV,g:14});if(i.detail)L.push({t:i.detail,s:10,g:3});(i.photos||[]).forEach(p=>L.push({img:p.d,w:p.w,h:p.h}))});return mkPDF(L)}
+function bkPDF(r){const L=[{t:'Registro de mantenimiento de bicicleta',s:17,b:1,c:NV},{t:'Feri Stays',s:11,b:1,c:GD,g:2},{t:'Bicicleta: '+r.bike,s:12,b:1,g:8},{t:'Fecha: '+fmt(r.date),s:10},{t:'Trabajo realizado',s:12,b:1,c:NV,g:12},{t:r.detail,s:10,g:3}];
+  r.photos.forEach(p=>L.push({img:p.d,w:p.w,h:p.h}));L.push({t:'Mecanico responsable',s:12,b:1,c:NV,g:14},{t:r.mech+'  -  '+r.dt+' '+r.dn,s:10,b:1},{img:r.sig,w:r.sw,h:r.sh});return mkPDF(L)}
+async function sendDoc(nm,str,subj,sum){
+  const by=new Uint8Array(str.length);for(let i=0;i<str.length;i++)by[i]=str.charCodeAt(i);const to=(S.settings.email||'').split(/[,;\s]+/).filter(Boolean);
+  if(S.settings.url&&navigator.onLine){try{await fetch(S.settings.url,{method:'POST',mode:'no-cors',headers:{'Content-Type':'text/plain'},body:JSON.stringify({tipo:'documento',asunto:subj,resumen:sum,fileName:nm,pdfBase64:btoa(str),recipients:to})});toast('Enviado por correo');return}catch(e){}}
+  const f=new File([by],nm,{type:'application/pdf'});
+  try{if(navigator.clipboard)navigator.clipboard.writeText(to.join(', ')).catch(()=>{});
+    if(navigator.canShare&&navigator.canShare({files:[f]})){await navigator.share({files:[f],title:subj,text:'Para: '+to.join(', ')+'\n'+sum});toast('Compartido. Pega los correos en “Para”.');return}}catch(e){if(e.name==='AbortError')return}
+  dl(nm,by,'application/pdf');toast('PDF descargado: adjúntalo a tu correo');
+}
+const mI=id=>S.mdraft.items.find(x=>x.id===id),nI=()=>({id:uid(),text:'',detail:'',photos:[],price:''});
+const opt=(a,v)=>a.map(x=>`<option ${x===v?'selected':''}>${esc(x)}</option>`).join('');
+function vMn(){
+  const d=S.mdraft,s=S.settings;
+  if(!d)return hdr('Mantenimiento','home')+`<label for="m-pr">Propiedad</label><select id="m-pr">${opt(s.props)}</select><label for="m-who">Quién hace el mantenimiento</label>${s.mstaff.length?`<select id="m-who">${opt(s.mstaff)}</select>`:'<input id="m-who" placeholder="Nombre completo">'}<button class="btn" data-a="mbegin">Empezar</button>`;
+  const pd=S.pend.filter(t=>t.prop===d.prop&&!t.done&&!d.items.some(i=>i.task===t.id));
+  return hdr(esc(d.prop),'home')+`<p class="mute">${esc(d.who)} · ${fmt(d.start)}</p>`+d.items.map((i,n)=>`<div class="card"><b>Trabajo ${n+1}</b><label>¿Qué se hizo?</label><input data-m="${i.id}:text" value="${esc(i.text)}"><label>Detalle</label><textarea data-m="${i.id}:detail">${esc(i.detail)}</textarea>${unlocked?`<label>Precio (solo tú lo ves)</label><input inputmode="numeric" data-m="${i.id}:price" value="${esc(i.price||'')}">`:''}${imgs(i.photos,'mdp',i.id)}<button class="btn sm sec" data-a="mph" data-id="${i.id}">Foto</button><button class="btn sm ghost" data-a="mdel" data-id="${i.id}">Quitar</button></div>`).join('')+
+  `<button class="btn sec" data-a="madd">+ Agregar otro trabajo</button>`+(pd.length?'<h2>Pendientes de esta propiedad</h2>'+pd.map(t=>`<button class="area" data-a="mtask" data-id="${t.id}">+ ${esc(t.text)}</button>`).join(''):'')+`<button class="btn" data-a="mfin">Terminar y enviar reporte</button><button class="btn ghost" data-a="mdisc">Descartar</button>`;
+}
+function vPd(){
+  return hdr('Pendientes de mantenimiento','home')+(unlocked?'':'<button class="btn sm sec" data-a="unlockpd">🔒 Ver precios (clave)</button>')+S.settings.props.map((p,j)=>{
+    const ts=S.pend.filter(t=>t.prop===p),op=ts.filter(t=>!t.done),tot=op.reduce((a,t)=>a+(+String(t.price||0).replace(/\D/g,'')||0),0);
+    return `<div class="card"><h3>${esc(p)} <span class="badge ${op.length?'':'sent'}">${op.length} pendiente(s)</span></h3>${unlocked&&tot?`<p class="mute">Estimado: $${tot.toLocaleString('es-CO')}</p>`:''}`+
+    ts.map(t=>`<button class="row ${t.done?'on':''}" data-a="ptog" data-id="${t.id}"><span class="box">✓</span><span>${esc(t.text)}${unlocked&&t.price?' · $'+esc(t.price):''}${t.done?' <small>('+esc(t.doneBy||'')+')</small>':''}</span></button>${unlocked?`<button class="btn sm ghost" data-a="pdel" data-id="${t.id}">Quitar</button>`:''}`).join('')+
+    `<div class="line"><input data-pt placeholder="Nueva tarea"></div>${unlocked?'<div class="line"><input data-pp inputmode="numeric" placeholder="Precio (solo tú lo ves)"></div>':''}<button class="btn sm sec" data-a="padd" data-p="${esc(p)}">+ Agregar</button></div>`}).join('');
+}
+function vBk(){
+  const o=S.bkd||(S.bkd={bike:S.bikes[0]||'',mech:'',dt:'Cédula de ciudadanía',dn:'',detail:'',photos:[],sig:''});
+  return hdr('Mantenimiento de bicicleta','home')+`<label>Bicicleta</label><select data-k="bike">${opt(S.bikes,o.bike)}</select><label>Qué se cambió, ajustó o adecuó</label><textarea data-k="detail" placeholder="Ej: cambio de pastillas de freno, ajuste de cadena">${esc(o.detail)}</textarea><h2>Fotos de evidencia</h2>${imgs(o.photos,'bdp')}<button class="btn sec" data-a="bph">Tomar foto</button>
+  <h2>Mecánico</h2><label>Nombre completo</label><input data-k="mech" value="${esc(o.mech)}"><label>Tipo de documento</label><select data-k="dt">${opt(['Cédula de ciudadanía','Cédula de extranjería','Pasaporte','Otro'],o.dt)}</select><label>Número de documento</label><input data-k="dn" value="${esc(o.dn)}">
+  <label>Firma del mecánico</label><div style="border:2px dashed #9AA5BC;border-radius:14px;background:#fff"><canvas id="bsig" style="width:100%;height:160px;touch-action:none;display:block"></canvas></div><button class="btn sm ghost" data-a="bclr">Borrar firma</button><button class="btn" data-a="bfin">Guardar y enviar</button><button class="btn ghost" data-a="bdisc">Descartar</button>`;
+}
+function bkInit(){
+  const c=$('#bsig');if(!c)return;const r=c.getBoundingClientRect(),dp=devicePixelRatio||1;c.width=r.width*dp;c.height=160*dp;const x=c.getContext('2d');x.setTransform(dp,0,0,dp,0,0);x.lineWidth=2.4;x.lineCap='round';x.strokeStyle='#1F2D47';
+  if(S.bkd.sig){const im=new Image();im.onload=()=>x.drawImage(im,0,0,r.width,160);im.src=S.bkd.sig}
+  let dr=false,l;const p=e=>{const b=c.getBoundingClientRect();return[e.clientX-b.left,e.clientY-b.top]};
+  c.onpointerdown=e=>{e.preventDefault();try{c.setPointerCapture(e.pointerId)}catch(_){}dr=true;l=p(e);x.beginPath();x.arc(l[0],l[1],1,0,6.3);x.stroke()};
+  c.onpointermove=e=>{if(!dr)return;const q=p(e);x.beginPath();x.moveTo(l[0],l[1]);x.lineTo(q[0],q[1]);x.stroke();l=q};
+  c.onpointerup=c.onpointercancel=()=>{if(!dr)return;dr=false;const t=document.createElement('canvas');t.width=c.width;t.height=c.height;const g=t.getContext('2d');g.fillStyle='#fff';g.fillRect(0,0,t.width,t.height);g.drawImage(c,0,0);S.bkd.sig=t.toDataURL('image/jpeg',.9);S.bkd.sw=t.width;S.bkd.sh=t.height;save()};
+}
+const _vh=vHist,sumP=t=>(+String(t||0).replace(/\D/g,'')||0);
+VIEWS.mn=vMn;VIEWS.pd=vPd;VIEWS.bk=vBk;
+VIEWS.hist=()=>_vh()+'<h2>Mantenimientos</h2>'+(S.mreports.length?S.mreports.map(r=>{const t=r.items.reduce((a,i)=>a+sumP(i.price),0);return `<div class="card"><b>${esc(r.prop)}</b> · ${fmt(r.start)}<br><span class="mute">${esc(r.who)} · ${r.items.length} trabajo(s)${t?' · $'+t.toLocaleString('es-CO'):''}</span><br><button class="btn sm sec" data-a="mre" data-id="${r.id}">Reenviar PDF</button></div>`}).join(''):'<p class="mute">Sin registros.</p>')+'<h2>Bicicletas</h2>'+(S.bikelogs.length?S.bikelogs.map(r=>`<div class="card"><b>${esc(r.bike)}</b> · ${fmt(r.date)}<br><span class="mute">${esc(r.mech)} · ${esc(r.dt)} ${esc(r.dn)}</span><br><button class="btn sm sec" data-a="bre" data-id="${r.id}">Reenviar PDF</button></div>`).join(''):'<p class="mute">Sin registros.</p>');
+Object.assign(A,{
+  mbegin(){const w=($('#m-who').value||'').trim();if(!w){toast('Escribe quién hace el mantenimiento');return}S.mdraft={id:uid(),prop:$('#m-pr').value,who:w,start:Date.now(),items:[nI()]};save();go('mn')},
+  madd(){S.mdraft.items.push(nI());save();V.keep=true;render()},
+  mdel(e){S.mdraft.items=S.mdraft.items.filter(i=>i.id!==e.dataset.id);if(!S.mdraft.items.length)S.mdraft.items.push(nI());save();V.keep=true;render()},
+  mph(e){const i=mI(e.dataset.id);if(i.photos.length>=4){toast('Máximo 4 fotos por trabajo');return}pt=p=>i.photos.push(p);ph2.click()},
+  mdp(e){mI(e.dataset.id).photos.splice(+e.dataset.i,1);save();V.keep=true;render()},
+  mtask(e){const t=S.pend.find(x=>x.id===e.dataset.id);const it=S.mdraft.items;if(it.length===1&&!it[0].text&&!it[0].photos.length)it.length=0;S.mdraft.items.push({id:uid(),text:t.text,detail:'',photos:[],price:t.price||'',task:t.id});save();V.keep=true;render()},
+  mdisc(){if(confirm('¿Descartar este registro?')){S.mdraft=null;save();go('home')}},
+  mfin(){const d=S.mdraft;d.items=d.items.filter(i=>i.text.trim());if(!d.items.length){toast('Escribe al menos un trabajo realizado');return}
+    d.end=Date.now();d.status='pending';d.items.forEach(i=>{const t=S.pend.find(x=>x.id===i.task);if(t){t.done=true;t.doneBy=d.who;t.doneAt=d.end}});
+    S.mreports.unshift(d);S.mreports.slice(8).forEach(r=>r.items.forEach(i=>i.photos=[]));S.mdraft=null;save();go('home');
+    sendDoc('mantenimiento-'+d.prop.toLowerCase().replace(/[^a-z0-9]+/g,'-')+'-'+new Date(d.start).toISOString().slice(0,10)+'.pdf',mnPDF(d),'Reporte de mantenimiento - '+d.prop,'Mantenimiento en '+d.prop+' por '+d.who+' ('+d.items.length+' trabajo(s)).')},
+  unlockpd(){V={n:'pin',to:'pd'};pinBuf='';render()},
+  padd(e){const c=e.closest('.card'),t=c.querySelector('[data-pt]').value.trim();if(!t){toast('Escribe la tarea');return}const pp=c.querySelector('[data-pp]');S.pend.push({id:uid(),prop:e.dataset.p,text:t,price:pp?pp.value.trim():'',done:false,date:Date.now()});save();V.keep=true;render()},
+  ptog(e){const t=S.pend.find(x=>x.id===e.dataset.id);if(t.done){t.done=false}else{const w=prompt('¿Quién lo hizo?');if(w===null)return;t.done=true;t.doneBy=w.trim();t.doneAt=Date.now()}save();V.keep=true;render()},
+  pdel(e){if(confirm('¿Quitar esta tarea?')){S.pend=S.pend.filter(x=>x.id!==e.dataset.id);save();V.keep=true;render()}},
+  bph(){if(S.bkd.photos.length>=4){toast('Máximo 4 fotos');return}pt=p=>S.bkd.photos.push(p);ph2.click()},
+  bdp(e){S.bkd.photos.splice(+e.dataset.i,1);save();V.keep=true;render()},
+  bclr(){S.bkd.sig='';save();bkInit()},
+  bdisc(){if(confirm('¿Descartar este registro?')){S.bkd=null;save();go('home')}},
+  bfin(){const o=S.bkd;if(!o.detail.trim()||!o.mech.trim()||!o.dn.trim()){toast('Completa el detalle y los datos del mecánico');return}
+    if(!o.photos.length){toast('Agrega al menos una foto de evidencia');return}if(!o.sig){toast('Falta la firma del mecánico');return}
+    const r={...o,id:uid(),date:Date.now()};S.bikelogs.unshift(r);S.bikelogs.slice(8).forEach(x=>{x.photos=[]});S.bkd=null;save();go('home');
+    sendDoc('bicicleta-'+r.bike.toLowerCase().replace(/[^a-z0-9]+/g,'-')+'-'+new Date(r.date).toISOString().slice(0,10)+'.pdf',bkPDF(r),'Mantenimiento de bicicleta - '+r.bike,'Mantenimiento de '+r.bike+' por '+r.mech+' ('+r.dt+' '+r.dn+').')},
+  mre(e){const r=S.mreports.find(x=>x.id===e.dataset.id);sendDoc('mantenimiento-'+new Date(r.start).toISOString().slice(0,10)+'.pdf',mnPDF(r),'Reporte de mantenimiento - '+r.prop,'Mantenimiento en '+r.prop+' por '+r.who+'.')},
+  bre(e){const r=S.bikelogs.find(x=>x.id===e.dataset.id);sendDoc('bicicleta-'+new Date(r.date).toISOString().slice(0,10)+'.pdf',bkPDF(r),'Mantenimiento de bicicleta - '+r.bike,'Mantenimiento de '+r.bike+' por '+r.mech+'.')}
+});
+document.addEventListener('input',ev=>{const t=ev.target;
+  if(t.dataset.m&&S.mdraft){const[id,f]=t.dataset.m.split(':');const i=mI(id);if(i){i[f]=t.value;save()}}
+  if(t.dataset.k&&S.bkd){S.bkd[t.dataset.k]=t.value;save()}});
+document.addEventListener('change',ev=>{const t=ev.target;
+  if(t.dataset.x==='mstaff'){S.settings.mstaff=t.value.split(',').map(x=>x.trim()).filter(Boolean);save()}
+  if(t.dataset.x==='bikes'){S.bikes=t.value.split(',').map(x=>x.trim()).filter(Boolean);save()}});
 
 if('serviceWorker' in navigator)addEventListener('load',()=>navigator.serviceWorker.register('service-worker.js').catch(()=>{}));
 render();autoUp();
