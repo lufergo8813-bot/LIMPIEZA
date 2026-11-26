@@ -24,8 +24,8 @@ p{margin:6px 0}
 .hero h1{font-size:25px}
 .hero small{color:#C3CBDC;display:block;margin-top:6px;font-size:15px}
 .logo{width:132px;height:132px;display:block;margin:0 auto 14px;border-radius:50%;box-shadow:0 0 0 4px rgba(221,165,46,.35)}
-.chip{display:inline-flex;align-items:center;gap:6px;font-size:13px;font-weight:700;padding:4px 10px;border-radius:99px;background:#2C3D5E;color:#DDE3F0;margin-top:12px}
-.chip i{width:8px;height:8px;border-radius:50%;background:var(--bad)}.chip.on i{background:#4be29a}
+.chip{display:inline-flex;align-items:center;gap:6px;font:inherit;font-size:13px;font-weight:700;padding:4px 10px;border-radius:99px;background:#2C3D5E;color:#DDE3F0;margin-top:12px;border:0;cursor:pointer}
+.chip i{width:8px;height:8px;border-radius:50%;background:var(--bad)}.chip.on i{background:#4be29a}.chip.err i{background:#F2B705}
 .card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:14px;margin:10px 0}
 .card.warn{background:#FFF7E0;border-color:#F0D9A0}.card.info{background:var(--aqual);border-color:#EBD9A0}
 .btn{display:block;width:100%;border:0;border-radius:14px;padding:16px;font:inherit;font-weight:800;background:var(--ink);color:#fff;margin:10px 0;text-align:center;cursor:pointer}
@@ -40,28 +40,38 @@ input,select,textarea{width:100%;font:inherit;padding:13px;border:1.5px solid va
 textarea{min-height:84px;resize:vertical}
 input:focus,select:focus,textarea:focus,.btn:focus-visible,.row:focus-visible{outline:3px solid var(--aqua);outline-offset:1px}
 .top{display:flex;align-items:center;gap:12px;padding:calc(14px + env(safe-area-inset-top)) 0 8px}
-.back{border:0;background:#fff;border:1px solid var(--line);border-radius:12px;width:44px;height:44px;font-size:22px;color:var(--ink)}
+.back{border:0;background:#fff;border:1px solid var(--line);border-radius:12px;width:44px;height:44px;font-size:22px;color:var(--ink);flex:none}
 .row{display:flex;gap:14px;align-items:center;width:100%;text-align:left;border:1.5px solid var(--line);background:#fff;border-radius:14px;padding:15px;margin:8px 0;font:inherit;color:var(--ink);cursor:pointer}
 .row .box{flex:none;width:30px;height:30px;border-radius:9px;border:2px solid #9DB6BC;display:grid;place-items:center;color:transparent;font-weight:900}
 .row.on{background:var(--aqual);border-color:var(--aqua)}
 .row.on .box{background:var(--ink);border-color:var(--ink);color:#fff}
 .row.on span:last-child{color:#5E6A80;text-decoration:line-through;text-decoration-color:#B8A56A}
-.area{display:block;width:100%;text-align:left;font:inherit;color:var(--ink);background:#fff;border:1.5px solid var(--line);border-radius:16px;padding:14px;margin:9px 0}
-.area b{display:flex;justify-content:space-between}
+.area{display:block;width:100%;text-align:left;font:inherit;color:var(--ink);background:#fff;border:1.5px solid var(--line);border-radius:16px;padding:14px;margin:9px 0;cursor:pointer}
+.area b{display:flex;justify-content:space-between;gap:8px}
+.area.hl{border-color:var(--aqua);background:var(--aqual)}
 .bar{height:8px;background:#E6E9F0;border-radius:9px;margin-top:10px;overflow:hidden}.bar i{display:block;height:100%;background:var(--aqua);border-radius:9px}
 .bar.full i{background:var(--ok)}
 .ringwrap{display:flex;gap:16px;align-items:center;background:#fff;border:1px solid var(--line);border-radius:18px;padding:14px;margin:8px 0}
 .ring{position:relative;width:84px;height:84px;flex:none}.ring b{position:absolute;inset:0;display:grid;place-items:center;font-size:20px}
 .seg{display:flex;gap:6px}.seg button{flex:1;padding:11px 4px;border-radius:11px;border:1.5px solid var(--line);background:#fff;font:inherit;font-weight:700;font-size:14px;color:var(--mute)}
 .seg button.on.ok{background:var(--ok);border-color:var(--ok);color:#fff}.seg button.on.poco{background:#F2B705;border-color:#F2B705;color:#222}.seg button.on.agotado{background:var(--bad);border-color:var(--bad);color:#fff}
-.badge{font-size:12.5px;font-weight:800;padding:3px 9px;border-radius:99px;background:#FBE3A0;color:#6B4D05}.badge.sent{background:#D3F2E2;color:#146B43}.badge.draft{background:#E6E9F0;color:var(--mute)}
+.seg button.on.sel,.seg button.on.st-pendiente{background:var(--ink);border-color:var(--ink);color:#fff}
+.seg button.on.st-proceso{background:#F2B705;border-color:#F2B705;color:#222}.seg button.on.st-hecha{background:var(--ok);border-color:var(--ok);color:#fff}
+.badge{font-size:12.5px;font-weight:800;padding:3px 9px;border-radius:99px;background:#FBE3A0;color:#6B4D05;white-space:nowrap}.badge.sent{background:#D3F2E2;color:#146B43}.badge.draft{background:#E6E9F0;color:var(--mute)}.badge.urg{background:#F8D3CE;color:#8E2418}
+.dot{display:inline-block;width:10px;height:10px;border-radius:50%;background:var(--bad);margin-right:7px;vertical-align:middle}
 .photos{display:flex;gap:8px;flex-wrap:wrap}.photos div{position:relative}.photos img{width:78px;height:78px;object-fit:cover;border-radius:10px;border:1px solid var(--line)}
 .photos button{position:absolute;top:-6px;right:-6px;width:24px;height:24px;border-radius:50%;border:0;background:var(--bad);color:#fff;font-weight:900}
 .nav{position:fixed;left:0;right:0;bottom:0;background:#fff;border-top:1px solid var(--line);display:flex;padding:6px 8px calc(6px + env(safe-area-inset-bottom));z-index:5}
-.nav button{flex:1;border:0;background:none;font:inherit;font-size:13px;font-weight:700;color:var(--mute);padding:8px 0;border-radius:12px}.nav button.on{color:var(--ink);background:var(--aqual)}
+.nav:empty{display:none}
+.nav button{flex:1;border:0;background:none;font:inherit;font-size:13px;font-weight:700;color:var(--mute);padding:8px 0;border-radius:12px;position:relative}.nav button.on{color:var(--ink);background:var(--aqual)}
 .nav svg{display:block;margin:0 auto 2px}
+.nb{position:absolute;top:2px;left:calc(50% + 6px);background:var(--bad);color:#fff;font-size:11px;min-width:18px;height:18px;line-height:18px;border-radius:9px;padding:0 4px}
 .mute{color:var(--mute);font-size:15px}.sm{font-size:14px}
-.line{display:flex;gap:8px;align-items:center;margin:6px 0}.line input{flex:1}.line .x{flex:none;width:44px;height:44px;border-radius:12px;border:1.5px solid var(--line);background:#fff;color:var(--bad);font-size:20px;font-weight:800}
+.line{display:flex;gap:8px;align-items:center;margin:6px 0}.line input,.line select{flex:1;min-width:0}.line .x{flex:none;width:44px;height:44px;border-radius:12px;border:1.5px solid var(--line);background:#fff;color:var(--bad);font-size:20px;font-weight:800}
+.line input.q{flex:0 0 86px}.line input.v{flex:0 0 128px}
+.tot{display:flex;justify-content:space-between;margin:4px 0}.tot.big{font-size:19px;font-weight:800;border-top:1px solid #EBD9A0;padding-top:8px;margin-top:8px}
+.chk{display:flex;gap:10px;align-items:center;font-weight:600;margin:18px 0}.chk input{width:22px;height:22px;flex:none}
+.foot{display:flex;justify-content:center;flex-wrap:wrap;gap:4px;margin-top:26px}
 .toast{position:fixed;left:16px;right:16px;bottom:calc(96px + env(safe-area-inset-bottom));background:var(--ink);color:#fff;padding:14px 16px;border-radius:14px;z-index:9;font-weight:600;text-align:center}
 ul.pl{margin:6px 0;padding-left:20px}ul.pl li{margin:3px 0;font-size:15px}
 .dots{display:flex;justify-content:center;gap:16px;margin:22px 0}
@@ -86,9 +96,27 @@ const fmt=t=>new Date(t).toLocaleString('es-CO',{day:'2-digit',month:'short',hou
 const MAILS='feristays@gmail.com, ericasierraq@gmail.com, lufergo8813@gmail.com';
 const TYPES=['Salida de huéspedes','Limpieza profunda','Revisión rápida'];
 
+/* ---------- claves (SHA-256, igual en todos los celulares) ---------- */
+function sha256(a){
+  const rr=(v,n)=>(v>>>n)|(v<<(32-n)),mw=2**32;let res='',w=[],L=a.length*8,H=[],K=[],pl=0;const ic={};
+  for(let c=2;pl<64;c++){if(!ic[c]){for(let i=0;i<313;i+=c)ic[i]=c;H[pl]=(c**.5*mw)|0;K[pl++]=(c**(1/3)*mw)|0}}
+  a+='\x80';while(a.length%64-56)a+='\x00';
+  for(let i=0;i<a.length;i++){const j=a.charCodeAt(i);if(j>>8)return'';w[i>>2]|=j<<((3-i)%4)*8}
+  w[w.length]=(L/mw)|0;w[w.length]=L;let h=H.slice(0,8);
+  for(let j=0;j<w.length;){const x=w.slice(j,j+=16),o=h;h=h.slice(0,8);
+    for(let i=0;i<64;i++){const a0=h[0],e=h[4],x15=x[i-15],x2=x[i-2];
+      const t1=h[7]+(rr(e,6)^rr(e,11)^rr(e,25))+((e&h[5])^(~e&h[6]))+K[i]+(x[i]=i<16?x[i]:(x[i-16]+(rr(x15,7)^rr(x15,18)^(x15>>>3))+x[i-7]+(rr(x2,17)^rr(x2,19)^(x2>>>10)))|0);
+      const t2=(rr(a0,2)^rr(a0,13)^rr(a0,22))+((a0&h[1])^(a0&h[2])^(h[1]&h[2]));
+      h=[(t1+t2)|0].concat(h);h[4]=(h[4]+t1)|0}
+    for(let i=0;i<8;i++)h[i]=(h[i]+o[i])|0}
+  for(let i=0;i<8;i++)for(let j=3;j+1;j--){const b=(h[i]>>(j*8))&255;res+=(b<16?'0':'')+b.toString(16)}
+  return res;
+}
+const ph=(id,pin)=>sha256('aseo|'+id+'|'+pin);
+
 function defaults(){
   const A=(n,items)=>({id:uid(),name:n,items:items.map(t=>({id:uid(),text:t}))});
-  return{
+  return{fresh:1,
     settings:{props:['La Buena Mesa','Corazón Envigado','Kiwi Apartamentos','Gascuña'],cleaners:['Ayarith'],mstaff:[],email:MAILS,url:'',last:{},pin:'8888'},
     template:[
       A('Entrada y sala',['Sacar basura y reciclaje','Sacudir muebles y superficies','Aspirar y trapear el piso','Limpiar espejos y vidrios','Acomodar cojines y control remoto']),
@@ -103,13 +131,158 @@ function defaults(){
   };
 }
 function load(){try{const d=JSON.parse(localStorage.getItem(KEY));if(d&&d.template){if(!d.settings.email)d.settings.email=MAILS;if(!d.v2){d.v2=1;if(d.settings.props.length===1&&d.settings.props[0]==='Apartamento 1')d.settings.props=defaults().settings.props;if(!d.settings.cleaners.includes('Ayarith'))d.settings.cleaners.unshift('Ayarith')}return d}}catch(e){}return defaults()}
+/* Migración a la versión con usuarios, tareas y sincronización (no borra datos anteriores) */
+function migrate(){
+  S.mreports=S.mreports||[];S.bikelogs=S.bikelogs||[];S.bikes=S.bikes||['Bici 1','Bici 2'];S.settings.mstaff=S.settings.mstaff||[];
+  if(S.v3)return;
+  const st=S.settings,pin=st.pin||'8888',u0=S.fresh?0:1,slugN=n=>'u-'+n.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g,'').replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'');
+  S.users=S.users||[{id:'adm1',name:'Administradora 1',role:'admin',pin:ph('adm1',pin),_u:0},{id:'adm2',name:'Administradora 2',role:'admin',pin:ph('adm2',pin),_u:0}];
+  const addU=(n,role)=>{n=(n||'').trim();if(!n)return;const id=slugN(n);if(!S.users.some(u=>u.id===id))S.users.push({id,name:n,role,pin:'',_u:u0})};
+  (st.cleaners||[]).forEach(n=>addU(n,'aseo'));(st.mstaff||[]).forEach(n=>addU(n,'mant'));
+  S.tasks=S.tasks||[];S.work=S.work||[];
+  (S.pend||[]).forEach(t=>{
+    S.tasks.push({id:t.id,kind:'mant',to:'rol:mant',prop:t.prop||'',title:t.text,detail:'',due:'',prio:'normal',budget:t.price||'',by:'adm1',at:t.date||Date.now(),_u:1});
+    if(t.done)S.work.push({id:t.id,status:'hecha',note:'',mats:[],labor:[],doneBy:'',doneName:t.doneBy||'',doneAt:t.doneAt||Date.now(),_u:1});
+  });
+  delete S.pend;
+  S.sync=S.sync||{url:st.url||'',key:'',rev:0,out:{},last:0,err:''};
+  S.cfgU=S.cfgU||{main:u0,template:u0};S.seen=S.seen||{};S.me=S.me||null;
+  delete S.fresh;S.v3=1;
+}
+let lastErrToast=0;
 function save(){
   S.reports.forEach((r,i)=>{if(i>=10&&r.status==='sent'&&r.photos&&r.photos.length)r.photos=[]});
   S.reports=S.reports.slice(0,60);
-  try{localStorage.setItem(KEY,JSON.stringify(S))}catch(e){toast('Memoria llena: envía y borra reportes viejos')}
+  try{localStorage.setItem(KEY,JSON.stringify(S))}catch(e){if(Date.now()-lastErrToast>5000){lastErrToast=Date.now();toast('Memoria llena: envía y borra reportes viejos')}}
+  if(S.sync&&Object.keys(S.sync.out).length)later();
 }
-let S=load(),V={n:'home'},awaiting=null,phTarget='general',unlocked=false,pinBuf='';
-const ADMIN=['hist','set'];
+let S=load();migrate();
+let V={n:'home'},awaiting=null,phTarget='general',pinBuf='';
+
+/* ---------- usuarios y roles ---------- */
+const ROLE={admin:'Administradora',aseo:'Aseo',mant:'Mantenimiento'};
+const me=()=>S.me?S.users.find(u=>u.id===S.me.id)||null:null;
+const adm=()=>{const u=me();return !!u&&u.role==='admin'};
+const uName=id=>{const u=S.users.find(x=>x.id===id);return u?u.name:''};
+const usersOf=r=>S.users.filter(u=>u.role===r);
+const ADMIN=['hist','set','tasks','tnew','rep'];
+
+/* ---------- tareas ---------- */
+const TST={pendiente:'Pendiente',proceso:'En proceso',hecha:'Hecha'};
+const toName=t=>t.to==='rol:aseo'?'Todo el personal de aseo':t.to==='rol:mant'?'Todo mantenimiento':(uName(t.to)||'(persona eliminada)');
+const mine=t=>{const u=me();return !!u&&(t.to===u.id||t.to==='rol:'+u.role)};
+const W=id=>S.work.find(w=>w.id===id);
+const getW=id=>{let w=W(id);if(!w){w={id,status:'pendiente',note:'',mats:[],labor:[]};S.work.push(w)}w.mats=w.mats||[];w.labor=w.labor||[];return w};
+const tst=t=>(W(t.id)||{}).status||'pendiente';
+const num=v=>+String(v??'').replace(/\D/g,'')||0;
+const qty=v=>{if(v===''||v==null)return 1;const n=parseFloat(String(v).replace(',','.'));return isFinite(n)?n:0};
+const sub=m=>Math.round(qty(m.q)*num(m.p));
+const costs=w=>{const m=(w&&w.mats||[]).reduce((a,x)=>a+sub(x),0),l=(w&&w.labor||[]).reduce((a,x)=>a+num(x.v),0);return{m,l,t:m+l}};
+const money=n=>'$'+Math.round(n).toLocaleString('es-CO');
+const today=()=>{const d=new Date();return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0')};
+const fdate=s=>{const[y,m,d]=String(s).split('-').map(Number);return y?new Date(y,m-1,d).toLocaleDateString('es-CO',{day:'2-digit',month:'short'}):''};
+const isLate=t=>t.due&&t.due<today()&&tst(t)!=='hecha';
+const tsort=(a,b)=>{const da=tst(a)==='hecha',db=tst(b)==='hecha';if(da!==db)return da?1:-1;if(da)return((W(b.id)||{}).doneAt||0)-((W(a.id)||{}).doneAt||0);
+  const ua=a.prio==='urgente',ub=b.prio==='urgente';if(ua!==ub)return ua?-1:1;if((a.due||'9')!==(b.due||'9'))return(a.due||'9')<(b.due||'9')?-1:1;return(b.at||0)-(a.at||0)};
+const myOpen=()=>S.tasks.filter(t=>mine(t)&&tst(t)!=='hecha');
+const unseen=()=>myOpen().filter(t=>!S.seen[t.id]).length;
+/* tareas adicionales de aseo que aplican a una limpieza */
+const extraFor=r=>S.tasks.filter(t=>t.kind==='aseo'&&(!t.prop||t.prop===r.property)&&(adm()?(t.to==='rol:aseo'||uName(t.to)===r.cleaner||t.to===S.me.id):mine(t))&&(tst(t)!=='hecha'||(r.xdone||{})[t.id])).sort(tsort);
+
+/* ---------- sincronización con el servidor (Google Apps Script + Hoja de Google) ---------- */
+const LIST={users:()=>S.users,tasks:()=>S.tasks,work:()=>S.work,reports:()=>S.reports,mreports:()=>S.mreports,bikelogs:()=>S.bikelogs};
+const STRIP={
+  reports:r=>{const o={...r};o.nPh=(r.photos||[]).length;delete o.photos;return o},
+  mreports:r=>({...r,items:(r.items||[]).map(i=>({...i,photos:[]}))}),
+  bikelogs:r=>{const o={...r};o.nPh=(r.photos||[]).length;o.photos=[];o.sig='';return o}
+};
+const MERGE={
+  reports:(l,d)=>({...d,photos:l&&l.photos||[]}),
+  mreports:(l,d)=>({...d,items:(d.items||[]).map(i=>({...i,photos:((l&&l.items||[]).find(x=>x.id===i.id)||{}).photos||[]}))}),
+  bikelogs:(l,d)=>({...d,photos:l&&l.photos&&l.photos.length?l.photos:[],sig:l&&l.sig||''})
+};
+const SORT={reports:(a,b)=>b.start-a.start,mreports:(a,b)=>b.start-a.start,bikelogs:(a,b)=>b.date-a.date,tasks:(a,b)=>(b.at||0)-(a.at||0)};
+function touch(col,r){r._u=Date.now();S.sync.out[col+'|'+r.id]=r._u}
+function gone(col,id){S.sync.out[col+'|'+id]=Date.now()}
+function touchCfg(id){S.cfgU[id]=Date.now();S.sync.out['cfg|'+id]=S.cfgU[id]}
+function enqueueAll(){
+  Object.keys(LIST).forEach(c=>LIST[c]().forEach(r=>{if(r&&r.id)S.sync.out[c+'|'+r.id]=r._u||0}));
+  S.sync.out['cfg|main']=S.cfgU.main||0;S.sync.out['cfg|template']=S.cfgU.template||0;
+}
+function outRec(c,id){
+  if(c==='cfg'){const u=S.cfgU[id]||0;return{u,d:id==='main'?{props:S.settings.props,supplies:S.supplies,bikes:S.bikes,email:S.settings.email}:{template:S.template}}}
+  const r=(LIST[c]?LIST[c]():[]).find(x=>x.id===id);
+  if(!r)return{u:S.sync.out[c+'|'+id]||Date.now(),x:1};
+  const d=(STRIP[c]||(x=>({...x})))(r);delete d._u;return{u:r._u||0,d};
+}
+function localU(c,id){
+  if(c==='cfg')return S.cfgU[id]||0;
+  const r=LIST[c]().find(x=>x.id===id);if(r)return r._u||0;
+  const k=c+'|'+id;return k in S.sync.out?S.sync.out[k]:-1;
+}
+function applyIn(ch){
+  const{c,i,u}=ch,k=c+'|'+i;if(c!=='cfg'&&!LIST[c])return false;
+  const lu=localU(c,i);
+  if(u<lu||(u===lu&&k in S.sync.out))return false;
+  if(!adm()&&['reports','mreports','bikelogs'].includes(c)&&!ch.x&&ch.d&&ch.d.by!==(S.me&&S.me.id))return false;
+  delete S.sync.out[k];
+  if(c==='cfg'){const d=ch.d||{};S.cfgU[i]=u;
+    if(i==='main'){if(d.props)S.settings.props=d.props;if(d.supplies)S.supplies=d.supplies;if(d.bikes)S.bikes=d.bikes;if(d.email!=null)S.settings.email=d.email}
+    else if(i==='template'&&d.template)S.template=d.template;
+    return true}
+  const L=LIST[c](),ix=L.findIndex(x=>x.id===i);
+  if(ch.x){if(ix>=0)L.splice(ix,1);return true}
+  const r=MERGE[c]?MERGE[c](ix>=0?L[ix]:null,ch.d):{...ch.d};r.id=i;r._u=u;
+  if(ix>=0)L[ix]=r;else L.push(r);
+  return true;
+}
+let syncing=false,syncAgain=false,syncT=null,prevUnseen=-1;
+function later(){clearTimeout(syncT);syncT=setTimeout(()=>syncNow(),1500)}
+const connected=()=>!!(S.sync.url&&S.sync.key);
+async function syncNow(manual){
+  const s=S.sync;
+  if(!connected()){if(manual)toast(adm()?'Falta el enlace del servidor o la clave del equipo (Ajustes)':'Este celular no está conectado al equipo');return false}
+  if(!navigator.onLine){if(manual)toast('Sin internet por ahora. Se sincroniza al volver la conexión.');return false}
+  if(syncing){syncAgain=true;return false}
+  syncing=true;let ok=false;
+  const snap={...s.out},cambios=Object.keys(snap).map(k=>{const p=k.indexOf('|'),c=k.slice(0,p),i=k.slice(p+1),o=outRec(c,i);return{c,i,u:o.u,d:o.d,x:o.x?1:0}});
+  try{
+    const res=await fetch(s.url,{method:'POST',headers:{'Content-Type':'text/plain;charset=utf-8'},body:JSON.stringify({accion:'sync',clave:s.key,desde:s.rev||0,cambios})});
+    const j=await res.json();
+    if(!j.ok)throw new Error(j.error||'respuesta inválida');
+    Object.keys(snap).forEach(k=>{if(s.out[k]===snap[k])delete s.out[k]});
+    let n=0;(j.cambios||[]).forEach(ch=>{if(applyIn(ch))n++});
+    if(n)Object.keys(SORT).forEach(c=>LIST[c]().sort(SORT[c]));
+    s.rev=j.rev||s.rev;s.last=Date.now();s.err=(j.rechazados||[]).length?'Algunos registros son demasiado grandes y no se subieron':'';
+    ok=true;
+    if(manual)toast('Sincronizado ✓');
+  }catch(e){s.err=String(e&&e.message||e);if(manual)toast('No se pudo sincronizar: '+s.err)}
+  syncing=false;save();
+  if(S.me&&!adm()){const u=unseen();if(prevUnseen>=0&&u>prevUnseen){toast(u===1?'📥 Tienes 1 tarea nueva':'📥 Tienes '+u+' tareas nuevas');try{navigator.vibrate&&navigator.vibrate([120,60,120])}catch(_){}}prevUnseen=u}
+  softRender();
+  if(syncAgain){syncAgain=false;later()}
+  return ok;
+}
+/* evita redibujar mientras alguien escribe */
+let needRender=false;
+function typing(){const a=document.activeElement;return a&&$('#app').contains(a)&&/^(INPUT|TEXTAREA|SELECT)$/.test(a.tagName)}
+function softRender(){if(typing()||V.n==='pin'||V.n==='bk'){needRender=true;$('#nav').innerHTML=navHtml();return}V.keep=true;render()}
+document.addEventListener('focusout',()=>{if(needRender)setTimeout(()=>{if(needRender&&!typing()&&V.n!=='bk'){needRender=false;V.keep=true;render()}},350)});
+/* código de conexión = enlace del servidor + clave del equipo */
+const b64u=s=>btoa(unescape(encodeURIComponent(s))).replace(/\+/g,'-').replace(/\//g,'_').replace(/=+$/,'');
+const ub64=s=>decodeURIComponent(escape(atob(s.replace(/-/g,'+').replace(/_/g,'/'))));
+const connCode=()=>'AA1.'+b64u(S.sync.url+'\n'+S.sync.key);
+function setConn(raw){
+  let c=String(raw||'').trim();const m=c.match(/AA1\.([A-Za-z0-9_-]{10,})/)||c.match(/#c=([A-Za-z0-9_-]{10,})/);if(m)c=m[1];
+  try{const[url,key]=ub64(c).split('\n');if(!/^https:\/\//.test(url)||!key)throw 0;
+    S.sync.url=url;S.sync.key=key;S.sync.rev=0;S.sync.err='';enqueueAll();save();return true}catch(e){return false}
+}
+function applyHash(){
+  const m=location.hash.match(/#c=([^&]+)/);if(!m)return;
+  if(setConn(m[1]))setTimeout(()=>toast('Celular conectado al equipo ✓'),300);else setTimeout(()=>toast('El enlace de conexión no es válido'),300);
+  history.replaceState(null,'',location.pathname+location.search);
+}
+const ago=t=>{const s=(Date.now()-t)/1000;return s<60?'hace un momento':s<3600?'hace '+Math.round(s/60)+' min':fmt(t)};
 
 /* ---------- cálculos ---------- */
 const tplOf=r=>r.tpl||S.template;
@@ -121,6 +294,7 @@ const supOf=r=>r.supList||S.supplies.map(s=>({name:s.name,st:(r.sup||{})[s.id]||
 const lowOf=r=>supOf(r).filter(s=>s.st!=='ok');
 const ST={draft:'En curso',pending:'Por enviar',sent:'Enviado'};
 const byId=id=>S.reports.find(r=>r.id===id);
+const nPh=r=>(r.photos||[]).length||r.nPh||0;
 
 /* ---------- texto y archivos de reporte ---------- */
 function text(r,short){
@@ -130,10 +304,11 @@ function text(r,short){
   L.push(`Responsable: ${r.cleaner} | Tipo: ${r.type}`);
   L.push(`Tareas hechas: ${s.d} de ${s.t} (${s.p}%)`);
   if(p.length){L.push('Pendientes:');p.slice(0,short?8:99).forEach(x=>L.push('- '+x));if(short&&p.length>8)L.push(`... y ${p.length-8} más`)}
+  if((r.extra||[]).length){L.push('Tareas adicionales:');r.extra.forEach(x=>L.push(`- ${x.title} (${x.done?'hecha':'pendiente'})`))}
   if(l.length)L.push('Insumos por reponer: '+l.map(x=>`${x.name} (${x.st})`).join(', '));
   if(r.damages)L.push('Daños o novedades: '+r.damages);
   if(r.final)L.push('Comentarios: '+r.final);
-  if((r.photos||[]).length)L.push(`Fotos: ${r.photos.length} (se envían con "Compartir")`);
+  if(nPh(r))L.push(`Fotos: ${nPh(r)} (se envían con "Compartir")`);
   return L.join('\n');
 }
 function csv(r){
@@ -141,24 +316,33 @@ function csv(r){
   R.push(['Propiedad',r.property],['Responsable',r.cleaner],['Tipo',r.type],['Inicio',fmt(r.start)],['Fin',r.end?fmt(r.end):''],['Duración (min)',mins(r)],['Tareas hechas',stat(r).d+' de '+stat(r).t],[]);
   R.push(['Área','Tarea','Hecho']);
   tplOf(r).forEach(a=>a.items.forEach(i=>R.push([a.name,i.text,r.checks[i.id]?'Sí':'No'])));
+  (r.extra||[]).forEach(x=>R.push(['Tarea adicional',x.title,x.done?'Sí':'No']));
   R.push([]);R.push(['Notas por área']);
   tplOf(r).forEach(a=>{if((r.notes||{})[a.id])R.push([a.name,r.notes[a.id]])});
   R.push([]);R.push(['Insumo','Estado']);supOf(r).forEach(s=>R.push([s.name,s.st]));
   R.push([],['Daños o novedades',r.damages||''],['Comentarios finales',r.final||'']);
-  return '\uFEFF'+R.map(x=>x.map(q).join(';')).join('\r\n');
+  return '﻿'+R.map(x=>x.map(q).join(';')).join('\r\n');
 }
 function histCsv(){
   const q=v=>'"'+String(v??'').replace(/"/g,'""')+'"';
-  const H=['Fecha','Propiedad','Responsable','Tipo','Minutos','Hechas','Total','% cumplimiento','Pendientes','Insumos por reponer','Novedades','Estado'];
-  const rows=S.reports.map(r=>{const s=stat(r);return[fmt(r.start),r.property,r.cleaner,r.type,mins(r),s.d,s.t,s.p+'%',pend(r).join(' | '),lowOf(r).map(x=>x.name).join(', '),r.damages||'',ST[r.status]]});
-  return '\uFEFF'+[H,...rows].map(x=>x.map(q).join(';')).join('\r\n');
+  const H=['Fecha','Propiedad','Responsable','Tipo','Minutos','Hechas','Total','% cumplimiento','Pendientes','Tareas adicionales','Insumos por reponer','Novedades','Estado'];
+  const rows=S.reports.map(r=>{const s=stat(r);return[fmt(r.start),r.property,r.cleaner,r.type,mins(r),s.d,s.t,s.p+'%',pend(r).join(' | '),(r.extra||[]).map(x=>x.title+(x.done?' (hecha)':' (pendiente)')).join(' | '),lowOf(r).map(x=>x.name).join(', '),r.damages||'',ST[r.status]]});
+  return '﻿'+[H,...rows].map(x=>x.map(q).join(';')).join('\r\n');
+}
+function tasksCsv(){
+  const q=v=>'"'+String(v??'').replace(/"/g,'""')+'"';
+  const H=['Creada','Tipo','Propiedad','Tarea','Detalle','Asignada a','Prioridad','Fecha límite','Estado','Hecha por','Terminada','Comentarios','Materiales','Total materiales','Mano de obra','Total mano de obra','Total','Presupuesto'];
+  const rows=S.tasks.slice().sort(tsort).map(t=>{const w=W(t.id)||{},c=costs(w);
+    return[fmt(t.at),t.kind==='mant'?'Mantenimiento':'Aseo',t.prop||'General',t.title,t.detail||'',toName(t),t.prio==='urgente'?'Urgente':'Normal',t.due||'',TST[w.status||'pendiente'],uName(w.doneBy)||w.doneName||'',w.doneAt?fmt(w.doneAt):'',w.note||'',
+      (w.mats||[]).map(m=>`${m.d} x${m.q||1} a ${money(num(m.p))} = ${money(sub(m))}`).join(' | '),c.m,(w.labor||[]).map(l=>`${l.d}: ${money(num(l.v))}`).join(' | '),c.l,c.t,num(t.budget)||'']});
+  return '﻿'+[H,...rows].map(x=>x.map(q).join(';')).join('\r\n');
 }
 function dl(name,content,type='text/csv'){const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([content],{type:type+';charset=utf-8'}));a.download=name;document.body.appendChild(a);a.click();a.remove()}
 const slug=r=>(r.property+'-'+new Date(r.start).toISOString().slice(0,10)).toLowerCase().replace(/[^a-z0-9-]+/g,'-');
 function dataFile(d,name){const b=atob(d.split(',')[1]),u=new Uint8Array(b.length);for(let i=0;i<b.length;i++)u[i]=b.charCodeAt(i);return new File([u],name,{type:'image/jpeg'})}
 
 /* ---------- envío ---------- */
-const mark=(list,st)=>{list.forEach(r=>{r.status=st});save();render()};
+const mark=(list,st)=>{list.forEach(r=>{r.status=st;touch('reports',r)});save();render()};
 function mail(list){
   const subj=list.length===1?`Reporte de aseo - ${list[0].property} - ${fmt(list[0].start)}`:`Reportes de aseo (${list.length})`;
   let body=list.map(r=>text(r,true)).join('\n\n----------\n\n');
@@ -183,69 +367,123 @@ async function share(list){
   }catch(e){if(e.name!=='AbortError')toast('No se pudo compartir')}
 }
 async function upload(list,quiet){
-  if(!S.settings.url){if(!quiet)toast('Primero pega el enlace de subida en Ajustes');return false}
+  if(!S.sync.url){if(!quiet)toast('Primero pega el enlace del servidor en Ajustes');return false}
   if(!navigator.onLine){if(!quiet)toast('Sin internet por ahora');return false}
   try{
-    const data=list.map(r=>({id:r.id,fecha:fmt(r.start),propiedad:r.property,responsable:r.cleaner,tipo:r.type,minutos:mins(r),hechas:stat(r).d,total:stat(r).t,pendientes:pend(r),insumos:lowOf(r),novedades:r.damages||'',comentarios:r.final||'',fotos:(r.photos||[]).length}));
-    await fetch(S.settings.url,{method:'POST',mode:'no-cors',headers:{'Content-Type':'text/plain'},body:JSON.stringify({reportes:data})});
+    const data=list.map(r=>({id:r.id,fecha:fmt(r.start),propiedad:r.property,responsable:r.cleaner,tipo:r.type,minutos:mins(r),hechas:stat(r).d,total:stat(r).t,pendientes:pend(r),insumos:lowOf(r),novedades:r.damages||'',comentarios:r.final||'',fotos:nPh(r)}));
+    await fetch(S.sync.url,{method:'POST',mode:'no-cors',headers:{'Content-Type':'text/plain'},body:JSON.stringify({reportes:data})});
     mark(list,'sent');toast(`Subido: ${list.length} reporte(s)`);return true;
   }catch(e){if(!quiet)toast('No se pudo subir. Intenta de nuevo.');return false}
 }
-function autoUp(){const p=S.reports.filter(r=>r.status==='pending');if(p.length&&S.settings.url&&navigator.onLine)upload(p,true)}
+const myPending=()=>S.reports.filter(r=>r.status==='pending'&&(!r.by||r.by===(S.me&&S.me.id)));
+function autoUp(){const p=myPending();if(p.length&&S.sync.url&&navigator.onLine)upload(p,true)}
 document.addEventListener('visibilitychange',()=>{
   if(document.visibilityState==='visible'&&awaiting){const ids=awaiting;awaiting=null;setTimeout(()=>{if(confirm('¿Se envió el correo?\nAceptar = marcar como enviado.'))mark(S.reports.filter(r=>ids.includes(r.id)),'sent')},400)}
 });
-addEventListener('online',()=>{render();autoUp()});addEventListener('offline',render);
+addEventListener('online',()=>{render();autoUp();syncNow()});addEventListener('offline',()=>softRender());
 
 /* ---------- UI helpers ---------- */
 function toast(m){const t=document.createElement('div');t.className='toast';t.textContent=m;document.body.appendChild(t);setTimeout(()=>t.remove(),3200)}
 function go(n,p={}){
-  if(ADMIN.includes(n)&&!unlocked){V={n:'pin',to:n};pinBuf='';render();scrollTo(0,0);return}
-  if(!ADMIN.includes(n)&&n!=='rep'&&n!=='pd')unlocked=false;
+  if(!me()&&n!=='login'&&n!=='pin')n='login';
+  if(ADMIN.includes(n)&&!adm()){toast('Solo para administradoras');n='home'}
   V={n,...p};render();scrollTo(0,0);
 }
 let hiddenAt=0;
 document.addEventListener('visibilitychange',()=>{
   if(document.visibilityState==='hidden')hiddenAt=Date.now();
-  else if(unlocked&&Date.now()-hiddenAt>120000){unlocked=false;if(['hist','set','rep'].includes(V.n))go('home')}
+  else{
+    if(S.me&&!S.me.keep&&hiddenAt&&Date.now()-hiddenAt>120000){S.me=null;save();go('login');return}
+    syncNow();
+  }
 });
 const ico={
   home:'<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11l9-8 9 8v10H3z"/><path d="M9 21v-7h6v7"/></svg>',
   hist:'<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="3" width="16" height="18" rx="2"/><path d="M8 8h8M8 12h8M8 16h5"/></svg>',
-  set:'<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M5 5l2 2M17 17l2 2M19 5l-2 2M7 17l-2 2"/></svg>'
+  set:'<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M5 5l2 2M17 17l2 2M19 5l-2 2M7 17l-2 2"/></svg>',
+  tasks:'<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6h11M9 12h11M9 18h11"/><path d="M3.5 6l1.5 1.5L7.5 5M3.5 12l1.5 1.5L7.5 11M3.5 18l1.5 1.5L7.5 17"/></svg>',
+  inbox:'<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 13l3-9h12l3 9v7H3z"/><path d="M3 13h5l1.5 3h5L16 13h5"/></svg>'
 };
 function navHtml(){
-  const cur=['home','start','check','area','sup','news','finish'].includes(V.n)?'home':(V.n==='pin'?V.to:V.n==='rep'?(unlocked?'hist':'home'):V.n);
-  return [['home','Inicio','home'],['hist','Historial','hist'],['set','Ajustes','set']].map(([k,l,i])=>`<button class="${cur===k?'on':''}" data-a="go" data-v="${k}">${ico[i]}${l}${!unlocked&&k!=='home'?' 🔒':''}</button>`).join('');
+  const u=me();if(!u||V.n==='login'||V.n==='pin')return'';
+  const items=u.role==='admin'?[['home','Inicio'],['tasks','Tareas'],['hist','Historial'],['set','Ajustes']]:[['home','Inicio'],['inbox','Bandeja']];
+  const grp={home:['home','start','check','area','sup','news','finish','mn','bk'],tasks:['tasks','tnew','task'],hist:['hist','rep'],set:['set'],inbox:['inbox','task']};
+  const cur=(items.find(([k])=>grp[k].includes(V.n))||['home'])[0],nb=u.role==='admin'?0:unseen();
+  return items.map(([k,l])=>`<button class="${cur===k?'on':''}" data-a="go" data-v="${k}">${ico[k]}${l}${k==='inbox'&&nb?`<span class="nb">${nb}</span>`:''}</button>`).join('');
 }
 const hdr=(t,back)=>`<div class="top"><button class="back" data-a="go" data-v="${back}" aria-label="Volver">‹</button><h1>${t}</h1></div>`;
 const ring=p=>{const c=2*Math.PI*36;return`<div class="ring"><svg width="84" height="84" viewBox="0 0 84 84"><circle cx="42" cy="42" r="36" fill="none" stroke="#E6E9F0" stroke-width="9"/><circle cx="42" cy="42" r="36" fill="none" stroke="${p===100?'#2E9E6B':'#DDA52E'}" stroke-width="9" stroke-linecap="round" stroke-dasharray="${c}" stroke-dashoffset="${c*(1-p/100)}" transform="rotate(-90 42 42)"/></svg><b>${p}%</b></div>`};
 const badge=r=>`<span class="badge ${r.status==='sent'?'sent':r.status==='draft'?'draft':''}">${ST[r.status]}</span>`;
+const tbadge=s=>`<span class="badge ${s==='hecha'?'sent':s==='proceso'?'':'draft'}">${TST[s]}</span>`;
+function chip(){
+  const on=navigator.onLine,s=S.sync,n=Object.keys(s.out).length;let c='',t;
+  if(!on)t='Sin internet · todo se guarda en el celular';
+  else if(!connected())t='Con internet · sin conexión al equipo';
+  else if(s.err){t='No se pudo sincronizar · toca para reintentar';c='err'}
+  else if(n){t=n+' cambio(s) por subir';c='err'}
+  else{t=s.last?'Sincronizado '+ago(s.last):'Sincronizando…';c='on'}
+  return `<button class="chip ${c}" data-a="syncnow"><i></i>${t}</button>`;
+}
+function tRow(t){
+  const s=tst(t),c=costs(W(t.id)),nw=!adm()&&s!=='hecha'&&!S.seen[t.id];
+  const info=[t.kind==='mant'?'🔧 Mantenimiento':'🧹 Aseo',t.prop||'General',adm()?toName(t):'',t.due?(isLate(t)?'⚠️ vencida ':'para ')+fdate(t.due):'',t.kind==='mant'&&c.t?money(c.t):''].filter(Boolean);
+  return `<button class="area${nw?' hl':''}" data-a="task" data-id="${t.id}"><b><span>${nw?'<span class="dot"></span>':''}${esc(t.title)}</span><span>${t.prio==='urgente'&&s!=='hecha'?'<span class="badge urg">Urgente</span> ':''}${tbadge(s)}</span></b><span class="mute sm">${info.map(esc).join(' · ')}</span></button>`;
+}
 
-/* ---------- vistas ---------- */
+/* ---------- vistas: entrada ---------- */
+function vLogin(){
+  const g=r=>usersOf(r);
+  let h=`<div class="hero"><img class="logo" src="logo.png" alt="Feri Stays"><h1>¿Quién eres?</h1><small>Toca tu nombre para entrar</small>${chip()}</div>`;
+  if(!connected())h+=`<div class="card info"><h3>Conectar este celular al equipo</h3><p class="mute sm">Pide a una administradora el enlace o el código de conexión y pégalo aquí. Así verás tus tareas y todo se sincroniza.</p><textarea id="cc" placeholder="Pega aquí el código o el enlace" style="min-height:70px"></textarea><button class="btn" data-a="conn">Conectar</button></div>`;
+  [['admin','Administradoras'],['aseo','Personal de aseo'],['mant','Mantenimiento']].forEach(([r,l])=>{const L=g(r);if(L.length)h+=`<h2>${l}</h2>`+L.map(u=>`<button class="area" data-a="pick" data-id="${u.id}"><b><span>${esc(u.name)}</span><span class="mute">${u.pin?'🔒':''}</span></b></button>`).join('')});
+  h+=`<label class="chk"><input type="checkbox" id="keep" ${S.keepPref!==false?'checked':''}> Mantener la sesión abierta en este celular</label><p class="mute sm">Desmárcalo si el celular lo usan varias personas: la sesión se cierra sola a los 2 minutos de salir de la app.</p>`;
+  if(connected())h+=`<button class="btn ghost" data-a="syncnow">Actualizar la lista de personas</button>`;
+  return h;
+}
+function vPin(){
+  const u=S.users.find(x=>x.id===V.uid);if(!u)return go('login');
+  const d=[0,1,2,3].map(i=>`<span class="${i<pinBuf.length?'f':''}"></span>`).join('');
+  const keys=['1','2','3','4','5','6','7','8','9','','0','⌫'].map(k=>k===''?'<span></span>':`<button class="key" data-a="key" data-v="${k}" aria-label="${k==='⌫'?'Borrar':k}">${k}</button>`).join('');
+  return hdr(esc(u.name),'login')+`<p class="mute" style="text-align:center">Escribe tu clave de 4 números.</p><div class="dots">${d}</div><div class="pad">${keys}</div>`;
+}
+
+/* ---------- vistas: aseo ---------- */
 function vHome(){
-  const d=S.draft,pe=S.reports.filter(r=>r.status==='pending'),on=navigator.onLine;
-  let h=`<div class="hero"><img class="logo" src="logo.png" alt="Feri Stays"><h1>Check-list de aseo</h1><small>${esc(S.settings.props.join(' · ')||'Agrega tu propiedad en Ajustes')}</small><span class="chip ${on?'on':''}"><i></i>${on?'Con internet':'Sin internet · todo se guarda en el celular'}</span></div>`;
-  if(pe.length){
-    h+=`<div class="card warn"><h3>${pe.length===1?'Reporte listo para enviar':pe.length+' reportes listos para enviar'}</h3>
-    <ul class="pl">${pe.map(r=>`<li>${esc(r.property)} · ${fmt(r.start)} · ${esc(r.cleaner)}</li>`).join('')}</ul>
-    <p class="mute">${on?'Toca el botón para enviarlo por correo.':'Sin internet: queda guardado en el celular. Envíalo cuando tengas internet.'}</p>
-    <button class="btn" data-a="mailAll">Enviar por correo</button>
-    <button class="btn sec" data-a="shareAll">Enviar con fotos</button>
-    <p class="mute sm">Con fotos: elige Gmail (o WhatsApp). Los correos de destino quedan copiados: en Gmail, mantén presionado “Para” y toca Pegar.</p>${S.settings.url?'<button class="btn sm sec" data-a="upAll">Subir</button>':''}</div>`;
+  const u=me(),r=u.role,d=S.draft,pe=myPending(),on=navigator.onLine;
+  let h=`<div class="hero"><img class="logo" src="logo.png" alt="Feri Stays"><h1>${r==='mant'?'Mantenimiento':'Check-list de aseo'}</h1><small>Hola, ${esc(u.name)} · ${ROLE[r]}</small>${chip()}</div>`;
+  if(r==='admin'&&u.pin===ph(u.id,'8888'))h+=`<div class="card warn"><h3>Cambia tu clave inicial</h3><p class="mute sm">Todavía usas la clave 8888. Toca “Cambiar mi clave” al final de esta pantalla.</p></div>`;
+  if(r==='admin'){
+    const op=S.tasks.filter(t=>tst(t)!=='hecha'),hoy=S.tasks.filter(t=>{const w=W(t.id);return w&&w.status==='hecha'&&w.doneAt&&new Date(w.doneAt).toDateString()===new Date().toDateString()}).length;
+    h+=`<button class="area" data-a="go" data-v="tasks"><b><span>📋 Tareas del equipo</span><span class="mute">${op.length} abiertas</span></b><span class="mute sm">Aseo: ${op.filter(t=>t.kind==='aseo').length} · Mantenimiento: ${op.filter(t=>t.kind==='mant').length}${hoy?' · '+hoy+' terminada(s) hoy':''}${op.some(isLate)?' · ⚠️ hay vencidas':''}</span></button>`;
+  }else{
+    const my=myOpen(),nw=unseen();
+    h+=`<button class="area ${nw?'hl':''}" data-a="go" data-v="inbox"><b><span>📥 Mi bandeja</span>${nw?`<span class="badge urg">${nw} nueva(s)</span>`:''}</b><span class="mute sm">${my.length?my.length+' tarea(s) por hacer':'No tienes tareas pendientes'}</span></button>`;
   }
-  if(d){const s=stat(d);h+=`<div class="card"><h3>Limpieza en curso</h3><p class="mute">${esc(d.property)} · ${esc(d.cleaner)} · ${s.d} de ${s.t} tareas</p><button class="btn" data-a="go" data-v="check">Continuar</button><button class="btn ghost" data-a="discard">Descartar esta limpieza</button></div>`}
-  else h+=`<button class="btn" style="font-size:19px;padding:20px" data-a="go" data-v="start">Iniciar limpieza</button>`;
-  const np=S.pend.filter(t=>!t.done).length;
-  h+=`<h2>Más</h2><button class="area" data-a="go" data-v="mn"><b><span>Mantenimiento de la propiedad</span></b></button><button class="area" data-a="go" data-v="pd"><b><span>Pendientes de mantenimiento</span><span class="mute">${np}</span></b></button><button class="area" data-a="go" data-v="bk"><b><span>Mantenimiento de bicicletas</span></b></button>`;
+  if(r!=='mant'){
+    if(pe.length){
+      h+=`<div class="card warn"><h3>${pe.length===1?'Reporte listo para enviar':pe.length+' reportes listos para enviar'}</h3>
+      <ul class="pl">${pe.map(r=>`<li>${esc(r.property)} · ${fmt(r.start)} · ${esc(r.cleaner)}</li>`).join('')}</ul>
+      <p class="mute">${on?'Toca el botón para enviarlo por correo.':'Sin internet: queda guardado en el celular. Envíalo cuando tengas internet.'}</p>
+      <button class="btn" data-a="mailAll">Enviar por correo</button>
+      <button class="btn sec" data-a="shareAll">Enviar con fotos</button>
+      <p class="mute sm">Con fotos: elige Gmail (o WhatsApp). Los correos de destino quedan copiados: en Gmail, mantén presionado “Para” y toca Pegar.</p>${S.sync.url?'<button class="btn sm sec" data-a="upAll">Subir</button>':''}</div>`;
+    }
+    if(d){const s=stat(d);h+=`<div class="card"><h3>Limpieza en curso</h3><p class="mute">${esc(d.property)} · ${esc(d.cleaner)} · ${s.d} de ${s.t} tareas</p><button class="btn" data-a="go" data-v="check">Continuar</button><button class="btn ghost" data-a="discard">Descartar esta limpieza</button></div>`}
+    else h+=`<button class="btn" style="font-size:19px;padding:20px" data-a="go" data-v="start">Iniciar limpieza</button>`;
+  }
+  if(r!=='aseo'){
+    h+=`<h2>${r==='mant'?'Registrar trabajo':'Más'}</h2>${S.mdraft?`<div class="card"><h3>Mantenimiento en curso</h3><p class="mute">${esc(S.mdraft.prop)} · ${esc(S.mdraft.who)}</p><button class="btn" data-a="go" data-v="mn">Continuar</button></div>`:'<button class="area" data-a="go" data-v="mn"><b><span>Mantenimiento de la propiedad</span></b></button>'}<button class="area" data-a="go" data-v="bk"><b><span>Mantenimiento de bicicletas</span></b></button>`;
+  }
+  h+=`<div class="foot"><button class="btn sm ghost" data-a="mypin">Cambiar mi clave</button><button class="btn sm ghost" data-a="logout">Salir / cambiar de usuario</button></div>`;
   return h;
 }
 function vStart(){
-  const s=S.settings,l=s.last||{};
+  const s=S.settings,l=s.last||{},u=me();
   const opt=(arr,sel)=>arr.map(x=>`<option ${x===sel?'selected':''}>${esc(x)}</option>`).join('');
+  const cl=usersOf('aseo').map(x=>x.name);
   return hdr('Nueva limpieza','home')+`
   <label for="f-cl">¿Quién limpia?</label>
-  ${s.cleaners.length?`<select id="f-cl">${opt(s.cleaners,l.cleaner)}<option value="__o">Otra persona…</option></select><input id="f-cl2" placeholder="Escribe el nombre" style="display:none;margin-top:8px">`:`<input id="f-cl" placeholder="Tu nombre">`}
+  ${u.role==='aseo'?`<input id="f-cl" value="${esc(u.name)}" readonly>`:cl.length?`<select id="f-cl">${opt(cl,l.cleaner)}<option value="__o">Otra persona…</option></select><input id="f-cl2" placeholder="Escribe el nombre" style="display:none;margin-top:8px">`:`<input id="f-cl" placeholder="Nombre">`}
   <label for="f-pr">Propiedad</label>
   <select id="f-pr">${opt(s.props,l.property)}</select>
   <label for="f-ty">Tipo de limpieza</label>
@@ -253,9 +491,10 @@ function vStart(){
   <button class="btn" style="margin-top:22px" data-a="begin">Empezar</button>`;
 }
 function vCheck(){
-  const r=S.draft;if(!r)return go('home');const s=stat(r);
-  let h=hdr(esc(r.property),'home')+`<div class="ringwrap">${ring(s.p)}<div><h3>${s.d} de ${s.t} tareas</h3><p class="mute">${esc(r.cleaner)} · ${esc(r.type)}</p></div></div><h2>Áreas</h2>`;
-  h+=S.template.map(a=>{const t=areaStat(r,a),full=t.d===t.t&&t.t>0;return`<button class="area" data-a="area" data-id="${a.id}"><b><span>${esc(a.name)}</span><span style="color:${full?'var(--ok)':'var(--mute)'}">${full?'✓ ':''}${t.d}/${t.t}</span></b><div class="bar ${full?'full':''}"><i style="width:${t.t?t.d*100/t.t:0}%"></i></div></button>`}).join('');
+  const r=S.draft;if(!r)return go('home');const s=stat(r),ex=extraFor(r);
+  let h=hdr(esc(r.property),'home')+`<div class="ringwrap">${ring(s.p)}<div><h3>${s.d} de ${s.t} tareas</h3><p class="mute">${esc(r.cleaner)} · ${esc(r.type)}</p></div></div>`;
+  if(ex.length)h+=`<h2>Tareas adicionales</h2><p class="mute sm">Las pidió una administradora para esta limpieza.</p>`+ex.map(t=>`<button class="row ${tst(t)==='hecha'?'on':''}" data-a="xtog" data-id="${t.id}"><span class="box">✓</span><span>${t.prio==='urgente'?'⚠️ ':''}${esc(t.title)}${t.detail?`<br><small class="mute">${esc(t.detail)}</small>`:''}</span></button>`).join('');
+  h+=`<h2>Áreas</h2>`+S.template.map(a=>{const t=areaStat(r,a),full=t.d===t.t&&t.t>0;return`<button class="area" data-a="area" data-id="${a.id}"><b><span>${esc(a.name)}</span><span style="color:${full?'var(--ok)':'var(--mute)'}">${full?'✓ ':''}${t.d}/${t.t}</span></b><div class="bar ${full?'full':''}"><i style="width:${t.t?t.d*100/t.t:0}%"></i></div></button>`}).join('');
   h+=`<h2>Además</h2><button class="area" data-a="go" data-v="sup"><b><span>Insumos</span><span class="mute">${lowOf(r).length?lowOf(r).length+' por reponer':'Todo bien'}</span></b></button>
   <button class="area" data-a="go" data-v="news"><b><span>Daños, novedades y fotos</span><span class="mute">${(r.photos||[]).length} foto(s)</span></b></button>
   <button class="btn" style="margin-top:20px" data-a="go" data-v="finish">Terminar limpieza</button>`;
@@ -285,50 +524,129 @@ function vNews(){
   <button class="btn sec" data-a="photo" data-v="general">Tomar foto</button><button class="btn" data-a="go" data-v="check">Listo</button>`;
 }
 function vFinish(){
-  const r=S.draft;if(!r)return go('home');const p=pend(r),s=stat(r);
+  const r=S.draft;if(!r)return go('home');const p=pend(r),s=stat(r),xp=extraFor(r).filter(t=>tst(t)!=='hecha');
   return hdr('Terminar','check')+`<div class="ringwrap">${ring(s.p)}<div><h3>${s.d} de ${s.t} tareas</h3><p class="mute">${mins(r)} min</p></div></div>`+
   (p.length?`<div class="card warn"><h3>Faltan ${p.length} tarea(s)</h3><ul class="pl">${p.slice(0,12).map(x=>`<li>${esc(x)}</li>`).join('')}${p.length>12?`<li>y ${p.length-12} más…</li>`:''}</ul><p class="mute">Puedes terminar así, pero quedarán anotadas como pendientes.</p></div>`:`<div class="card info"><h3>Todo completo ✓</h3></div>`)+
+  (xp.length?`<div class="card warn"><h3>Tareas adicionales sin hacer: ${xp.length}</h3><ul class="pl">${xp.map(t=>`<li>${esc(t.title)}</li>`).join('')}</ul><p class="mute sm">Siguen en tu bandeja para después.</p></div>`:'')+
   `<label for="fn">Comentarios finales (opcional)</label><textarea id="fn" data-b="final">${esc(r.final||'')}</textarea>
   <button class="btn" data-a="finish">Terminar y guardar</button>`;
 }
 function vRep(){
   const r=byId(V.id);if(!r)return go('hist');const p=pend(r),l=lowOf(r),s=stat(r);
-  return hdr('Reporte',unlocked?'hist':'home')+`<div class="card"><b>${esc(r.property)}</b> ${badge(r)}<p class="mute">${fmt(r.start)} · ${mins(r)} min<br>${esc(r.cleaner)} · ${esc(r.type)}</p>
+  return hdr('Reporte','hist')+`<div class="card"><b>${esc(r.property)}</b> ${badge(r)}<p class="mute">${fmt(r.start)} · ${mins(r)} min<br>${esc(r.cleaner)} · ${esc(r.type)}</p>
   <div class="bar ${s.p===100?'full':''}"><i style="width:${s.p}%"></i></div><p><b>${s.d} de ${s.t}</b> tareas (${s.p}%)</p></div>
   ${p.length?`<div class="card warn"><h3>Pendientes</h3><ul class="pl">${p.map(x=>`<li>${esc(x)}</li>`).join('')}</ul></div>`:''}
+  ${(r.extra||[]).length?`<div class="card"><h3>Tareas adicionales</h3><ul class="pl">${r.extra.map(x=>`<li>${esc(x.title)} — ${x.done?'hecha':'pendiente'}</li>`).join('')}</ul></div>`:''}
   ${l.length?`<div class="card"><h3>Insumos por reponer</h3><ul class="pl">${l.map(x=>`<li>${esc(x.name)} — ${x.st}</li>`).join('')}</ul></div>`:''}
   ${r.damages||r.final?`<div class="card"><h3>Novedades</h3><p>${esc(r.damages||'')}</p><p class="mute">${esc(r.final||'')}</p></div>`:''}
-  ${(r.photos||[]).length?`<div class="photos">${r.photos.map(x=>`<img src="${x.d}" alt="Foto">`).join('')}</div>`:''}
+  ${(r.photos||[]).length?`<div class="photos">${r.photos.map(x=>`<img src="${x.d}" alt="Foto">`).join('')}</div>`:r.nPh?`<p class="mute sm">${r.nPh} foto(s) guardadas en el celular de ${esc(r.cleaner)}.</p>`:''}
   <h2>Enviar</h2>
   <button class="btn" data-a="mail" data-id="${r.id}">Enviar por correo</button>
   <button class="btn sec" data-a="share" data-id="${r.id}">Enviar con fotos y archivo (Gmail, WhatsApp, Drive…)</button>
-  ${S.settings.url?`<button class="btn sec" data-a="up" data-id="${r.id}">Subir ahora</button>`:''}
+  ${S.sync.url?`<button class="btn sec" data-a="up" data-id="${r.id}">Subir ahora</button>`:''}
   <button class="btn ghost" data-a="csv" data-id="${r.id}">Descargar archivo para Excel</button>
-  ${unlocked?`<button class="btn ghost" data-a="togSent" data-id="${r.id}">${r.status==='sent'?'Marcar como por enviar':'Marcar como enviado'}</button>
-  <button class="btn bad" data-a="delrep" data-id="${r.id}">Borrar reporte</button>`:''}`;
-}
-function vPin(){
-  const d=[0,1,2,3].map(i=>`<span class="${i<pinBuf.length?'f':''}"></span>`).join('');
-  const keys=['1','2','3','4','5','6','7','8','9','','0','⌫'].map(k=>k===''?'<span></span>':`<button class="key" data-a="key" data-v="${k}" aria-label="${k==='⌫'?'Borrar':k}">${k}</button>`).join('');
-  return hdr('Clave','home')+`<p class="mute" style="text-align:center">Escribe la clave de 4 números.<br>Solo el administrador entra aquí.</p><div class="dots">${d}</div><div class="pad">${keys}</div>`;
+  <button class="btn ghost" data-a="togSent" data-id="${r.id}">${r.status==='sent'?'Marcar como por enviar':'Marcar como enviado'}</button>
+  <button class="btn bad" data-a="delrep" data-id="${r.id}">Borrar reporte</button>`;
 }
 function vHist(){
-  return `<div class="top"><h1>Historial</h1></div>`+(S.reports.length?S.reports.map(r=>`<button class="area" data-a="rep" data-id="${r.id}"><b><span>${esc(r.property)}</span>${badge(r)}</b><span class="mute">${fmt(r.start)} · ${esc(r.cleaner)} · ${stat(r).p}%</span></button>`).join('')+`<button class="btn sec" data-a="histcsv">Descargar historial para Excel</button>`:`<div class="card info"><p>Aquí verás las limpiezas terminadas.</p></div>`);
+  return `<div class="top"><h1>Historial</h1></div>`+(S.reports.length?S.reports.map(r=>`<button class="area" data-a="rep" data-id="${r.id}"><b><span>${esc(r.property)}</span>${badge(r)}</b><span class="mute">${fmt(r.start)} · ${esc(r.cleaner)} · ${stat(r).p}%</span></button>`).join('')+`<button class="btn sec" data-a="histcsv">Descargar historial para Excel</button>`:`<div class="card info"><p>Aquí verás las limpiezas terminadas de todo el equipo.</p></div>`);
 }
+
+/* ---------- vistas: tareas ---------- */
+function vInbox(){
+  const my=S.tasks.filter(mine).sort(tsort),open=my.filter(t=>tst(t)!=='hecha'),done=my.filter(t=>tst(t)==='hecha'&&((W(t.id)||{}).doneAt||0)>Date.now()-7*864e5);
+  return hdr('Mi bandeja','home')+(open.length?open.map(tRow).join(''):'<div class="card info"><p>No tienes tareas pendientes. 🎉</p></div>')+
+    (done.length?'<h2>Terminadas (últimos 7 días)</h2>'+done.map(tRow).join(''):'')+`<button class="btn ghost" data-a="syncnow">Buscar tareas nuevas</button>`;
+}
+function totHtml(t,w){
+  const c=costs(w),b=num(t.budget);
+  return `<div class="tot"><span>Materiales</span><b>${money(c.m)}</b></div><div class="tot"><span>Mano de obra</span><b>${money(c.l)}</b></div><div class="tot big"><span>Total</span><span>${money(c.t)}</span></div>`+
+    (adm()&&b?`<p class="mute sm">Presupuesto ${money(b)} · ${c.t>b?'⚠️ excede en '+money(c.t-b):'dentro del presupuesto'}</p>`:'');
+}
+function vTask(){
+  const t=S.tasks.find(x=>x.id===V.id),back=adm()?'tasks':'inbox';
+  if(!t||(!adm()&&!mine(t)))return go(back);
+  if(!S.seen[t.id]){S.seen[t.id]=1;save()}
+  const w=W(t.id)||{status:'pendiente',note:'',mats:[],labor:[]},s=w.status||'pendiente',T=t.id;
+  let h=hdr(esc(t.title),back)+`<div class="card"><p class="mute sm">${t.kind==='mant'?'🔧 Mantenimiento':'🧹 Aseo'} · ${esc(t.prop||'General')} ${t.prio==='urgente'?'<span class="badge urg">Urgente</span>':''}</p>
+   ${t.detail?`<p>${esc(t.detail).replace(/\n/g,'<br>')}</p>`:''}
+   <p class="mute sm">Asignada a: ${esc(toName(t))}${t.due?`<br>Fecha límite: ${fdate(t.due)}${isLate(t)?' · <b style="color:var(--bad)">vencida</b>':''}`:''}<br>Creada por ${esc(uName(t.by)||'—')} · ${fmt(t.at)}</p>
+   ${adm()&&t.budget?`<p class="mute sm">Presupuesto: ${money(num(t.budget))} (solo lo ven las administradoras)</p>`:''}</div>
+  <h2>Estado</h2><div class="seg">${['pendiente','proceso','hecha'].map(k=>`<button class="${s===k?'on st-'+k:''}" data-a="wst" data-id="${T}" data-v="${k}">${TST[k]}</button>`).join('')}</div>
+  ${s==='hecha'&&w.doneAt?`<p class="mute sm">Hecha por ${esc(uName(w.doneBy)||w.doneName||'—')} · ${fmt(w.doneAt)}</p>`:''}
+  <label for="wn">Comentarios</label><textarea id="wn" data-w="${T}:note" placeholder="Ej: faltó un repuesto, queda para mañana…">${esc(w.note||'')}</textarea>`;
+  if(t.kind==='mant'){
+    h+=`<h2>Materiales usados</h2>`+((w.mats||[]).length?'':'<p class="mute sm">Agrega cada material con la cantidad y el precio por unidad.</p>')+
+    (w.mats||[]).map(m=>`<div class="card"><div class="line"><input data-w="${T}:mats:${m.id}:d" value="${esc(m.d)}" placeholder="Material (ej: tubo PVC 1/2)"><button class="x" data-a="wdel" data-id="${T}" data-k="mats" data-j="${m.id}" aria-label="Quitar material">×</button></div>
+      <div class="line"><input class="q" inputmode="decimal" data-w="${T}:mats:${m.id}:q" value="${esc(m.q)}" placeholder="Cant." aria-label="Cantidad"><input inputmode="numeric" data-w="${T}:mats:${m.id}:p" value="${esc(m.p)}" placeholder="Precio por unidad $" aria-label="Precio por unidad"></div>
+      <p class="mute sm" id="st-${m.id}">Subtotal: ${money(sub(m))}</p></div>`).join('')+
+    `<button class="btn sm sec" data-a="wadd" data-id="${T}" data-k="mats">+ Material</button>
+    <h2>Mano de obra</h2>`+((w.labor||[]).length?'':'<p class="mute sm">Agrega el valor del trabajo (puedes separar por actividad).</p>')+
+    (w.labor||[]).map(l=>`<div class="line"><input data-w="${T}:labor:${l.id}:d" value="${esc(l.d)}" placeholder="Actividad (ej: instalación)"><input class="v" inputmode="numeric" data-w="${T}:labor:${l.id}:v" value="${esc(l.v)}" placeholder="Valor $" aria-label="Valor"><button class="x" data-a="wdel" data-id="${T}" data-k="labor" data-j="${l.id}" aria-label="Quitar">×</button></div>`).join('')+
+    `<button class="btn sm sec" data-a="wadd" data-id="${T}" data-k="labor">+ Mano de obra</button>
+    <div class="card info" id="tots">${totHtml(t,w)}</div>`;
+  }
+  h+=adm()?`<h2>Administrar</h2><button class="btn sec" data-a="tedit" data-id="${T}">Editar tarea</button><button class="btn bad" data-a="tdel" data-id="${T}">Borrar tarea</button>`:`<button class="btn" data-a="go" data-v="inbox">Listo</button>`;
+  return h;
+}
+function vTasks(){
+  const f=S.tf||(S.tf={k:'todas',s:'abiertas'});let L=S.tasks.slice();
+  if(f.k!=='todas')L=L.filter(t=>t.kind===f.k);
+  if(f.s==='abiertas')L=L.filter(t=>tst(t)!=='hecha');else if(f.s==='hechas')L=L.filter(t=>tst(t)==='hecha');
+  L.sort(tsort);
+  const mo=new Date();mo.setDate(1);mo.setHours(0,0,0,0);
+  const cm=S.tasks.reduce((a,t)=>{const w=W(t.id);return a+(t.kind==='mant'&&w&&w.status==='hecha'&&(w.doneAt||0)>=+mo?costs(w).t:0)},0);
+  const seg=(k,o)=>`<div class="seg" style="margin:8px 0">${o.map(([v,l])=>`<button class="${f[k]===v?'on sel':''}" data-a="tf" data-k="${k}" data-v="${v}">${l}</button>`).join('')}</div>`;
+  return `<div class="top"><h1>Tareas</h1></div><button class="btn" data-a="tnew">+ Nueva tarea</button>`+
+    seg('k',[['todas','Todas'],['aseo','Aseo'],['mant','Mantenimiento']])+seg('s',[['abiertas','Abiertas'],['hechas','Hechas'],['todas','Todas']])+
+    (cm?`<p class="mute sm">Costo de mantenimientos terminados este mes: <b>${money(cm)}</b></p>`:'')+
+    (L.length?L.map(tRow).join(''):'<div class="card info"><p>No hay tareas con este filtro.</p></div>')+
+    (S.tasks.length?`<button class="btn ghost" data-a="tcsv">Descargar tareas y costos para Excel</button>`:'');
+}
+function toOpts(kind,sel){
+  const o=(v,l)=>`<option value="${esc(v)}" ${v===sel?'selected':''}>${esc(l)}</option>`;
+  return o('rol:'+kind,kind==='aseo'?'Todo el personal de aseo':'Todo el personal de mantenimiento')+
+    `<optgroup label="${kind==='aseo'?'Aseo':'Mantenimiento'}">`+usersOf(kind).map(u=>o(u.id,u.name)).join('')+'</optgroup>'+
+    `<optgroup label="Administradoras">`+usersOf('admin').map(u=>o(u.id,u.name)).join('')+'</optgroup>';
+}
+function vTnew(){
+  const t=V.id?S.tasks.find(x=>x.id===V.id):null,d=t||{kind:V.kind||'aseo',to:'',prop:V.prop||'',title:'',detail:'',due:'',prio:'normal',budget:''};
+  const po=['',...S.settings.props].map(p=>`<option value="${esc(p)}" ${p===d.prop?'selected':''}>${p?esc(p):'General / sin propiedad'}</option>`).join('');
+  return hdr(t?'Editar tarea':'Nueva tarea',t?'task':'tasks')+`
+  <label for="tn-kind">Tipo de tarea</label><select id="tn-kind"><option value="aseo" ${d.kind==='aseo'?'selected':''}>🧹 Aseo</option><option value="mant" ${d.kind==='mant'?'selected':''}>🔧 Mantenimiento</option></select>
+  <label for="tn-to">¿Para quién?</label><select id="tn-to">${toOpts(d.kind,d.to)}</select>
+  <label for="tn-prop">Propiedad</label><select id="tn-prop">${po}</select>
+  <label for="tn-title">Tarea</label><input id="tn-title" value="${esc(d.title)}" placeholder="Ej: lavar cortinas de la sala">
+  <label for="tn-detail">Detalle (opcional)</label><textarea id="tn-detail" placeholder="Instrucciones, ubicación, qué revisar…">${esc(d.detail)}</textarea>
+  <label for="tn-due">Fecha límite (opcional)</label><input id="tn-due" type="date" value="${esc(d.due)}">
+  <label for="tn-prio">Prioridad</label><select id="tn-prio"><option value="normal">Normal</option><option value="urgente" ${d.prio==='urgente'?'selected':''}>Urgente</option></select>
+  <div id="tn-bw" style="display:${d.kind==='mant'?'block':'none'}"><label for="tn-budget">Presupuesto estimado (opcional, solo lo ven las administradoras)</label><input id="tn-budget" inputmode="numeric" value="${esc(d.budget)}" placeholder="$"></div>
+  <button class="btn" data-a="tsave" data-id="${t?t.id:''}">${t?'Guardar cambios':'Crear y enviar a la bandeja'}</button>`;
+}
+
+/* ---------- vistas: ajustes ---------- */
 function vSet(){
-  const s=S.settings;
+  const s=S.settings,y=S.sync,n=Object.keys(y.out).length;
   const list=(arr,k)=>arr.map((x,i)=>`<div class="line"><input value="${esc(x)}" data-s="${k}:${i}"><button class="x" data-a="del${k}" data-i="${i}" aria-label="Quitar">×</button></div>`).join('');
+  const est=!connected()?'Sin conectar':y.err?'Error: '+y.err:y.last?'Sincronizado '+ago(y.last)+(n?' · '+n+' cambio(s) por subir':''):'Aún no se ha sincronizado';
   return `<div class="top"><h1>Ajustes</h1></div>
+  <h2>Sincronización entre celulares</h2>
+  <div class="card ${connected()&&!y.err?'info':'warn'}"><b>${esc(est)}</b><p class="mute sm">Cada celular guarda todo y sincroniza solo cuando tiene internet (al abrir la app, cada minuto y después de cada cambio).</p></div>
+  <label for="ur">Enlace del servidor (Google Apps Script)</label><input id="ur" data-s="url" value="${esc(y.url)}" placeholder="https://script.google.com/macros/s/…/exec">
+  <label for="ky">Clave del equipo</label><input id="ky" data-s="key" value="${esc(y.key)}" autocomplete="off" placeholder="La genera el servidor con configurar()">
+  <button class="btn" data-a="syncnow">Sincronizar ahora</button>
+  ${connected()?`<button class="btn sec" data-a="shareconn">Compartir conexión con el equipo</button><p class="mute sm">Envía el enlace por WhatsApp a cada persona. Si ya tiene la app instalada en la pantalla de inicio, que copie el código y lo pegue en la pantalla de entrada.</p><button class="btn ghost" data-a="fullsync">Volver a descargar todo del servidor</button>`:''}
+  <h2>Usuarios</h2><p class="mute sm">Cada persona entra tocando su nombre. Las administradoras necesitan clave de 4 números; para aseo y mantenimiento es opcional.</p>
+  ${S.users.map(u=>`<div class="card"><div class="line"><input value="${esc(u.name)}" data-u="${u.id}:name" aria-label="Nombre"><button class="x" data-a="udel" data-id="${u.id}" aria-label="Quitar usuario">×</button></div>
+    <div class="line"><select data-u="${u.id}:role" aria-label="Rol">${Object.keys(ROLE).map(r=>`<option value="${r}" ${u.role===r?'selected':''}>${ROLE[r]}</option>`).join('')}</select><button class="btn sm sec" style="flex:none;margin:0" data-a="upin" data-id="${u.id}">${u.pin?'Cambiar clave':'Poner clave'}</button></div>
+    ${u.pin&&u.pin===ph(u.id,'8888')?'<p class="sm" style="color:var(--bad)">⚠️ Usa la clave inicial 8888</p>':''}</div>`).join('')}
+  <button class="btn sm sec" data-a="uadd">+ Agregar persona</button>
   <div class="card info"><b>Instalar en el celular</b><p class="mute sm">Abre esta página en Chrome (Android) o Safari (iPhone) → menú → “Agregar a pantalla de inicio”. Después funciona sin internet.</p></div>
   <h2>Envío de reportes</h2>
   <label for="em">Correos de destino</label><textarea id="em" data-s="email" inputmode="email" style="min-height:96px" placeholder="uno@correo.com, otro@correo.com">${esc(s.email)}</textarea>
   <p class="mute sm">Separa los correos con coma. El botón “Enviar por correo” abre el correo que ya está configurado en el celular y llena estos destinatarios.</p>
-  <label for="ur">Enlace de subida automática (opcional)</label><input id="ur" data-s="url" value="${esc(s.url)}" placeholder="https://script.google.com/…">
-  <p class="mute sm">Si lo pegas, los reportes pendientes se suben solos cuando el celular recupera internet.</p>
-  <h2>Mantenimiento</h2><label>Personal de mantenimiento (separados por coma)</label><input data-x="mstaff" value="${esc(S.settings.mstaff.join(', '))}"><label>Bicicletas (separadas por coma)</label><input data-x="bikes" value="${esc(S.bikes.join(', '))}">
-  <h2>Clave de acceso</h2><button class="btn sec" data-a="chpin">Cambiar clave</button>
+  <h2>Bicicletas</h2><label for="bkl">Bicicletas (separadas por coma)</label><input id="bkl" data-x="bikes" value="${esc(S.bikes.join(', '))}">
   <h2>Propiedades</h2>${list(s.props,'P')}<button class="btn sm sec" data-a="addP">+ Agregar</button>
-  <h2>Personal de aseo</h2>${list(s.cleaners,'C')}<button class="btn sm sec" data-a="addC">+ Agregar</button>
   <h2>Insumos a revisar</h2>${S.supplies.map((x,i)=>`<div class="line"><input value="${esc(x.name)}" data-s="S:${i}"><button class="x" data-a="delS" data-i="${i}" aria-label="Quitar">×</button></div>`).join('')}<button class="btn sm sec" data-a="addS">+ Agregar</button>
   <h2>Check-list</h2><p class="mute sm">Cambia, agrega o quita áreas y tareas. Los reportes ya guardados no cambian.</p>
   ${S.template.map(a=>`<div class="card"><div class="line"><input value="${esc(a.name)}" data-t="a:${a.id}" style="font-weight:800"><button class="x" data-a="delA" data-id="${a.id}" aria-label="Quitar área">×</button></div>
@@ -337,51 +655,68 @@ function vSet(){
   <button class="btn sec" data-a="addA">+ Agregar área</button>
   <button class="btn ghost" data-a="reset">Restaurar check-list original</button>`;
 }
-const VIEWS={pin:vPin,home:vHome,start:vStart,check:vCheck,area:vArea,sup:vSup,news:vNews,finish:vFinish,rep:vRep,hist:vHist,set:vSet};
+const VIEWS={login:vLogin,pin:vPin,home:vHome,start:vStart,check:vCheck,area:vArea,sup:vSup,news:vNews,finish:vFinish,rep:vRep,hist:vHist,set:vSet,inbox:vInbox,task:vTask,tasks:vTasks,tnew:vTnew};
 function render(){
-  const el=$('#app'),y=scrollY;
-  el.innerHTML=VIEWS[V.n]();$('#nav').innerHTML=navHtml();if(V.n==='bk')bkInit();
-  if(V.keep)scrollTo(0,y);V.keep=false;
+  if(!me()&&V.n!=='login'&&V.n!=='pin')V={n:'login'};
+  const el=$('#app'),y=scrollY,keep=V.keep;V.keep=false;needRender=false;
+  const h=VIEWS[V.n]();
+  if(typeof h!=='string')return;            // la vista ya redirigió a otra
+  el.innerHTML=h;$('#nav').innerHTML=navHtml();if(V.n==='bk')bkInit();
+  if(keep)scrollTo(0,y);
 }
+const cfgMain=()=>{touchCfg('main')},cfgTpl=()=>{touchCfg('template')};
 
 /* ---------- acciones ---------- */
 const A={
   go(e){const v=e.dataset.v;go(v==='area'?'check':v)},
+  pick(e){const u=S.users.find(x=>x.id===e.dataset.id);if(!u)return;const k=$('#keep');S.keepPref=k?k.checked:true;
+    if(u.pin){pinBuf='';go('pin',{uid:u.id})}else login(u)},
   key(e){
     const k=e.dataset.v;
     if(k==='⌫')pinBuf=pinBuf.slice(0,-1);else if(pinBuf.length<4)pinBuf+=k;
     if(pinBuf.length===4){
-      if(pinBuf===(S.settings.pin||'8888')){unlocked=true;const to=V.to;pinBuf='';go(to);return}
+      const u=S.users.find(x=>x.id===V.uid);
+      if(u&&ph(u.id,pinBuf)===u.pin){pinBuf='';login(u);return}
       toast('Clave incorrecta');pinBuf='';
     }
     render();
   },
-  chpin(){
-    const n=prompt('Escribe la nueva clave de 4 números');
-    if(n===null)return;
-    if(!/^\d{4}$/.test(n.trim())){toast('Debe tener exactamente 4 números');return}
-    S.settings.pin=n.trim();save();toast('Clave cambiada');
-  },
+  logout(){S.me=null;prevUnseen=-1;save();go('login')},
+  mypin(){const u=me(),n=prompt(u.role==='admin'?'Escribe tu nueva clave de 4 números':'Escribe tu nueva clave de 4 números (déjala vacía para entrar sin clave)');
+    if(n===null)return;const v=n.trim();
+    if(v===''&&u.role!=='admin'){u.pin='';touch('users',u);save();render();toast('Clave quitada');return}
+    if(!/^\d{4}$/.test(v)){toast('Debe tener exactamente 4 números');return}
+    u.pin=ph(u.id,v);touch('users',u);save();render();toast('Clave cambiada');},
+  conn(){if(setConn($('#cc').value)){toast('Conectando…');syncNow(true).then(ok=>{if(ok)toast('Celular conectado al equipo ✓')});render()}else toast('Código no válido. Pídelo de nuevo a una administradora.')},
+  syncnow(){syncNow(true)},
+  fullsync(){if(!confirm('¿Volver a descargar todo del servidor? Lo que no se haya subido se envía primero.'))return;S.sync.rev=0;enqueueAll();save();syncNow(true)},
+  async shareconn(){const link=location.origin+location.pathname+'#c='+connCode().slice(4),code=connCode();
+    const msg='Para conectar la app de Aseo y Mantenimiento de Feri Stays:\n1) Abre este enlace: '+link+'\n2) Si ya tienes la app instalada, ábrela y pega este código en la pantalla de entrada:\n'+code;
+    try{if(navigator.share){await navigator.share({title:'Conexión app Feri Stays',text:msg});return}}catch(e){if(e.name==='AbortError')return}
+    try{await navigator.clipboard.writeText(msg);toast('Mensaje copiado: pégalo en WhatsApp')}catch(e){prompt('Copia este mensaje:',msg)}},
   begin(){
     let cl=$('#f-cl').value;if(cl==='__o')cl=($('#f-cl2').value||'').trim();cl=(cl||'').trim();
     if(!cl){toast('Escribe quién limpia');return}
     const pr=$('#f-pr').value,ty=$('#f-ty').value;
     if(!pr){toast('Agrega una propiedad en Ajustes');return}
     S.settings.last={cleaner:cl,property:pr,type:ty};
-    if(!S.settings.cleaners.includes(cl))S.settings.cleaners.push(cl);
-    S.draft={id:uid(),status:'draft',cleaner:cl,property:pr,type:ty,start:Date.now(),checks:{},notes:{},sup:{},photos:[],damages:'',final:''};
+    S.draft={id:uid(),status:'draft',by:me().id,cleaner:cl,property:pr,type:ty,start:Date.now(),checks:{},notes:{},sup:{},photos:[],damages:'',final:'',xdone:{}};
     save();go('check');
   },
   area(e){go('area',{id:e.dataset.id})},
   tog(e){const r=S.draft,id=e.dataset.id;r.checks[id]=!r.checks[id];save();V.keep=true;render()},
+  xtog(e){const id=e.dataset.id,w=getW(id),r=S.draft;r.xdone=r.xdone||{};
+    if(w.status==='hecha'){w.status='pendiente';w.doneBy='';w.doneAt=0;delete r.xdone[id]}else{w.status='hecha';w.doneBy=me().id;w.doneAt=Date.now();r.xdone[id]=1}
+    S.seen[id]=1;touch('work',w);save();V.keep=true;render()},
   allArea(e){const a=S.template.find(x=>x.id===V.id);a.items.forEach(i=>S.draft.checks[i.id]=e.dataset.v==='1');save();V.keep=true;render()},
   sup(e){S.draft.sup[e.dataset.id]=e.dataset.v;save();V.keep=true;render()},
   photo(e){if((S.draft.photos||[]).length>=6){toast('Máximo 6 fotos');return}phTarget=e.dataset.v;$('#ph').click()},
   dph(e){S.draft.photos.splice(+e.dataset.i,1);save();V.keep=true;render()},
   discard(){if(confirm('¿Descartar esta limpieza? Se pierde lo marcado.')){S.draft=null;save();render()}},
   finish(){
-    const r=S.draft;r.end=Date.now();r.tpl=JSON.parse(JSON.stringify(S.template));r.supList=supOf(r);r.status='pending';
-    S.reports.unshift(r);S.draft=null;save();autoUp();go('home');toast('Limpieza guardada. Ahora envía el reporte.');
+    const r=S.draft;r.extra=extraFor(r).map(t=>({id:t.id,title:t.title,done:tst(t)==='hecha'}));
+    r.end=Date.now();r.tpl=JSON.parse(JSON.stringify(S.template));r.supList=supOf(r);r.status='pending';
+    S.reports.unshift(r);S.draft=null;touch('reports',r);save();autoUp();go('home');toast('Limpieza guardada. Ahora envía el reporte.');
   },
   rep(e){go('rep',{id:e.dataset.id})},
   mail(e){mail([byId(e.dataset.id)])},
@@ -389,36 +724,87 @@ const A={
   up(e){upload([byId(e.dataset.id)])},
   csv(e){const r=byId(e.dataset.id);dl(`aseo-${slug(r)}.csv`,csv(r))},
   togSent(e){const r=byId(e.dataset.id);mark([r],r.status==='sent'?'pending':'sent')},
-  delrep(e){if(confirm('¿Borrar este reporte? No se puede deshacer.')){S.reports=S.reports.filter(r=>r.id!==e.dataset.id);save();go('hist')}},
-  mailAll(){mail(S.reports.filter(r=>r.status==='pending'))},
-  shareAll(){share(S.reports.filter(r=>r.status==='pending'))},
-  upAll(){upload(S.reports.filter(r=>r.status==='pending'))},
+  delrep(e){if(confirm('¿Borrar este reporte? Se borra también en los demás celulares.')){S.reports=S.reports.filter(r=>r.id!==e.dataset.id);gone('reports',e.dataset.id);save();go('hist')}},
+  mailAll(){mail(myPending())},
+  shareAll(){share(myPending())},
+  upAll(){upload(myPending())},
   histcsv(){dl('historial-aseo.csv',histCsv())},
-  addP(){S.settings.props.push('');save();V.keep=true;render()},
-  addC(){S.settings.cleaners.push('');save();V.keep=true;render()},
-  addS(){S.supplies.push({id:uid(),name:''});save();V.keep=true;render()},
-  delP(e){S.settings.props.splice(+e.dataset.i,1);save();V.keep=true;render()},
-  delC(e){S.settings.cleaners.splice(+e.dataset.i,1);save();V.keep=true;render()},
-  delS(e){S.supplies.splice(+e.dataset.i,1);save();V.keep=true;render()},
-  addA(){S.template.push({id:uid(),name:'Nueva área',items:[]});save();V.keep=true;render()},
-  addI(e){S.template.find(a=>a.id===e.dataset.id).items.push({id:uid(),text:''});save();V.keep=true;render()},
-  delA(e){if(confirm('¿Quitar esta área con todas sus tareas?')){S.template=S.template.filter(a=>a.id!==e.dataset.id);save();V.keep=true;render()}},
-  delI(e){const a=S.template.find(a=>a.id===e.dataset.id);a.items=a.items.filter(i=>i.id!==e.dataset.j);save();V.keep=true;render()},
-  reset(){if(confirm('¿Restaurar áreas y tareas originales?')){S.template=defaults().template;save();V.keep=true;render()}}
+  /* tareas */
+  task(e){go('task',{id:e.dataset.id})},
+  tf(e){S.tf[e.dataset.k]=e.dataset.v;save();V.keep=true;render()},
+  tnew(){go('tnew',{})},
+  tedit(e){go('tnew',{id:e.dataset.id})},
+  tsave(e){
+    const g=id=>($('#'+id).value||'').trim(),title=g('tn-title');if(!title){toast('Escribe la tarea');return}
+    const kind=g('tn-kind'),f={kind,to:g('tn-to')||'rol:'+kind,prop:g('tn-prop'),title,detail:g('tn-detail'),due:g('tn-due'),prio:g('tn-prio')||'normal',budget:kind==='mant'?g('tn-budget'):''};
+    let t=e.dataset.id&&S.tasks.find(x=>x.id===e.dataset.id);
+    if(t)Object.assign(t,f);else{t={id:uid(),...f,by:me().id,at:Date.now()};S.tasks.unshift(t)}
+    touch('tasks',t);save();
+    toast(e.dataset.id?'Tarea actualizada':(connected()?'Tarea creada: llega a '+toName(t)+' al sincronizar':'Tarea creada. Conecta la sincronización para que llegue a los demás celulares.'));
+    go('task',{id:t.id});
+  },
+  tdel(e){if(!confirm('¿Borrar esta tarea? Se borra en todos los celulares, con sus materiales y costos.'))return;const id=e.dataset.id;
+    S.tasks=S.tasks.filter(t=>t.id!==id);gone('tasks',id);if(W(id)){S.work=S.work.filter(w=>w.id!==id);gone('work',id)}save();go('tasks')},
+  tcsv(){dl('tareas-y-costos.csv',tasksCsv())},
+  wst(e){const w=getW(e.dataset.id),v=e.dataset.v;if(w.status===v)return;w.status=v;
+    if(v==='hecha'){w.doneBy=me().id;w.doneAt=Date.now()}else{w.doneBy='';w.doneAt=0}
+    touch('work',w);save();V.keep=true;render();if(v==='hecha')toast('Tarea marcada como hecha ✓')},
+  wadd(e){const w=getW(e.dataset.id),k=e.dataset.k,o=k==='mats'?{id:uid(),d:'',q:'',p:''}:{id:uid(),d:'',v:''};w[k].push(o);touch('work',w);save();V.keep=true;render();
+    const el=document.querySelector(`[data-w="${e.dataset.id}:${k}:${o.id}:d"]`);if(el)el.focus()},
+  wdel(e){const w=getW(e.dataset.id),k=e.dataset.k;w[k]=w[k].filter(x=>x.id!==e.dataset.j);touch('work',w);save();V.keep=true;render()},
+  /* usuarios */
+  uadd(){const u={id:'u-'+uid(),name:'Nueva persona',role:'aseo',pin:''};S.users.push(u);touch('users',u);save();V.keep=true;render()},
+  udel(e){const u=S.users.find(x=>x.id===e.dataset.id);if(!u)return;
+    if(u.id===S.me.id){toast('No puedes quitarte a ti misma');return}
+    if(u.role==='admin'&&usersOf('admin').length<=1){toast('Debe quedar al menos una administradora');return}
+    if(!confirm('¿Quitar a '+u.name+'? Sus tareas asignadas quedan sin responsable.'))return;
+    S.users=S.users.filter(x=>x.id!==u.id);gone('users',u.id);save();V.keep=true;render()},
+  upin(e){const u=S.users.find(x=>x.id===e.dataset.id);const n=prompt('Clave de 4 números para '+u.name+(u.role==='admin'?'':' (vacía = sin clave)'));
+    if(n===null)return;const v=n.trim();
+    if(v===''&&u.role!=='admin')u.pin='';else if(/^\d{4}$/.test(v))u.pin=ph(u.id,v);else{toast('Debe tener exactamente 4 números');return}
+    touch('users',u);save();V.keep=true;render();toast('Clave guardada')},
+  addP(){S.settings.props.push('');cfgMain();save();V.keep=true;render()},
+  addS(){S.supplies.push({id:uid(),name:''});cfgMain();save();V.keep=true;render()},
+  delP(e){S.settings.props.splice(+e.dataset.i,1);cfgMain();save();V.keep=true;render()},
+  delS(e){S.supplies.splice(+e.dataset.i,1);cfgMain();save();V.keep=true;render()},
+  addA(){S.template.push({id:uid(),name:'Nueva área',items:[]});cfgTpl();save();V.keep=true;render()},
+  addI(e){S.template.find(a=>a.id===e.dataset.id).items.push({id:uid(),text:''});cfgTpl();save();V.keep=true;render()},
+  delA(e){if(confirm('¿Quitar esta área con todas sus tareas?')){S.template=S.template.filter(a=>a.id!==e.dataset.id);cfgTpl();save();V.keep=true;render()}},
+  delI(e){const a=S.template.find(a=>a.id===e.dataset.id);a.items=a.items.filter(i=>i.id!==e.dataset.j);cfgTpl();save();V.keep=true;render()},
+  reset(){if(confirm('¿Restaurar áreas y tareas originales?')){S.template=defaults().template;cfgTpl();save();V.keep=true;render()}}
 };
+function login(u){
+  const prev=S.lastUser;S.me={id:u.id,keep:S.keepPref!==false};S.lastUser=u.id;
+  if(prev&&prev!==u.id)S.sync.rev=0;            // otra persona: volver a traer todo lo que le corresponde
+  prevUnseen=-1;save();go('home');syncNow();
+}
 document.addEventListener('click',ev=>{const e=ev.target.closest('[data-a]');if(e&&A[e.dataset.a])A[e.dataset.a](e)});
 document.addEventListener('change',ev=>{
   const t=ev.target;
   if(t.id==='f-cl'&&t.tagName==='SELECT'){$('#f-cl2').style.display=t.value==='__o'?'block':'none'}
+  if(t.id==='keep')S.keepPref=t.checked;
+  if(t.id==='tn-kind'){$('#tn-to').innerHTML=toOpts(t.value,'');$('#tn-bw').style.display=t.value==='mant'?'block':'none'}
   if(t.dataset.s){const[k,i]=t.dataset.s.split(':');const v=t.value.trim();
-    if(k==='email'||k==='url')S.settings[k]=t.dataset.s==='email'?v:v;
-    else if(k==='P')S.settings.props[+i]=v;else if(k==='C')S.settings.cleaners[+i]=v;else if(k==='S')S.supplies[+i].name=v;
-    S.settings.props=S.settings.props.filter(Boolean);S.settings.cleaners=S.settings.cleaners.filter(Boolean);save()}
+    if(k==='url'||k==='key'){if(S.sync[k]!==v){S.sync[k]=v;S.sync.rev=0;S.sync.err='';enqueueAll();save();if(connected())syncNow(true)}return}
+    if(k==='email')S.settings.email=v;
+    else if(k==='P')S.settings.props[+i]=v;else if(k==='S')S.supplies[+i].name=v;
+    S.settings.props=S.settings.props.filter(Boolean);cfgMain();save()}
   if(t.dataset.t){const p=t.dataset.t.split(':');const a=S.template.find(x=>x.id===p[1]);
-    if(p[0]==='a')a.name=t.value.trim()||a.name;else{const it=a.items.find(x=>x.id===p[2]);it.text=t.value.trim()||it.text}save()}
+    if(p[0]==='a')a.name=t.value.trim()||a.name;else{const it=a.items.find(x=>x.id===p[2]);it.text=t.value.trim()||it.text}cfgTpl();save()}
+  if(t.dataset.u){const[id,f]=t.dataset.u.split(':'),u=S.users.find(x=>x.id===id);if(!u)return;
+    if(f==='name'){const v=t.value.trim();if(!v){t.value=u.name;return}u.name=v}
+    else if(f==='role'){if(u.role==='admin'&&t.value!=='admin'&&usersOf('admin').length<=1){toast('Debe quedar al menos una administradora');t.value='admin';return}
+      u.role=t.value;if(u.role==='admin'&&!u.pin)toast('Ponle una clave a esta administradora')}
+    touch('users',u);save();if(!adm())go('home');else{V.keep=true;render()}}
 });
 document.addEventListener('input',ev=>{
-  const t=ev.target;if(!t.dataset.b||!S.draft)return;
+  const t=ev.target;
+  if(t.dataset.w){const p=t.dataset.w.split(':'),w=getW(p[0]);
+    if(p[1]==='note')w.note=t.value;else{const l=(w[p[1]]||[]).find(x=>x.id===p[2]);if(!l)return;l[p[3]]=t.value;
+      const st=$('#st-'+p[2]);if(st)st.textContent='Subtotal: '+money(sub(l));
+      const tk=S.tasks.find(x=>x.id===p[0]),tb=$('#tots');if(tk&&tb)tb.innerHTML=totHtml(tk,w)}
+    touch('work',w);save();return}
+  if(!t.dataset.b||!S.draft)return;
   if(t.dataset.b==='note'){S.draft.notes=S.draft.notes||{};S.draft.notes[V.id]=t.value}else S.draft[t.dataset.b]=t.value;
   save();
 });
@@ -429,8 +815,7 @@ $('#ph').addEventListener('change',async ev=>{
 });
 
 
-/* ===== MANTENIMIENTO / BICICLETAS / PENDIENTES ===== */
-S.pend=S.pend||[];S.mreports=S.mreports||[];S.bikelogs=S.bikelogs||[];S.bikes=S.bikes||['Bici 1','Bici 2'];S.settings.mstaff=S.settings.mstaff||[];
+/* ===== MANTENIMIENTO / BICICLETAS ===== */
 const shot=f=>new Promise(res=>{const r=new FileReader();r.onload=()=>{const im=new Image();im.onload=()=>{const k=Math.min(1,700/Math.max(im.width,im.height)),c=document.createElement('canvas');c.width=im.width*k;c.height=im.height*k;c.getContext('2d').drawImage(im,0,0,c.width,c.height);res({d:c.toDataURL('image/jpeg',.6),w:c.width,h:c.height})};im.src=r.result};r.readAsDataURL(f)});
 const ph2=document.createElement('input');ph2.type='file';ph2.accept='image/*';ph2.id='ph2';ph2.hidden=true;ph2.setAttribute('capture','environment');document.body.appendChild(ph2);let pt=null;
 ph2.addEventListener('change',async()=>{const f=ph2.files[0];ph2.value='';if(!f||!pt)return;pt(await shot(f));save();V.keep=true;render()});
@@ -457,12 +842,23 @@ function mkPDF(items){
 }
 const NV='0.12 0.18 0.28',GD='0.54 0.39 0.06';
 function mnPDF(r){const L=[{t:'Reporte de mantenimiento',s:17,b:1,c:NV},{t:'Feri Stays',s:11,b:1,c:GD,g:2},{t:'Propiedad: '+r.prop,s:12,b:1,g:8},{t:'Realizado por: '+r.who,s:11},{t:'Fecha: '+fmt(r.start)+'  -  '+fmt(r.end),s:10}];
-  r.items.forEach((i,n)=>{L.push({t:(n+1)+'. '+i.text,s:12,b:1,c:NV,g:14});if(i.detail)L.push({t:i.detail,s:10,g:3});(i.photos||[]).forEach(p=>L.push({img:p.d,w:p.w,h:p.h}))});return mkPDF(L)}
+  let gt=0;
+  r.items.forEach((i,n)=>{L.push({t:(n+1)+'. '+i.text,s:12,b:1,c:NV,g:14});if(i.detail)L.push({t:i.detail,s:10,g:3});
+    const w=i.task&&W(i.task);
+    if(w&&((w.mats||[]).length||(w.labor||[]).length)){const c=costs(w);gt+=c.t;
+      (w.mats||[]).forEach(m=>L.push({t:'Material: '+(m.d||'')+'  x'+(m.q||1)+'  a '+money(num(m.p))+'  = '+money(sub(m)),s:10,g:2}));
+      (w.labor||[]).forEach(l=>L.push({t:'Mano de obra: '+(l.d||'')+'  '+money(num(l.v)),s:10,g:2}));
+      L.push({t:'Total de este trabajo: '+money(c.t),s:10,b:1,g:2})}
+    (i.photos||[]).forEach(p=>L.push({img:p.d,w:p.w,h:p.h}))});
+  if(gt)L.push({t:'TOTAL MATERIALES Y MANO DE OBRA: '+money(gt),s:12,b:1,c:NV,g:16});
+  return mkPDF(L)}
 function bkPDF(r){const L=[{t:'Registro de mantenimiento de bicicleta',s:17,b:1,c:NV},{t:'Feri Stays',s:11,b:1,c:GD,g:2},{t:'Bicicleta: '+r.bike,s:12,b:1,g:8},{t:'Fecha: '+fmt(r.date),s:10},{t:'Trabajo realizado',s:12,b:1,c:NV,g:12},{t:r.detail,s:10,g:3}];
-  r.photos.forEach(p=>L.push({img:p.d,w:p.w,h:p.h}));L.push({t:'Mecanico responsable',s:12,b:1,c:NV,g:14},{t:r.mech+'  -  '+r.dt+' '+r.dn,s:10,b:1},{img:r.sig,w:r.sw,h:r.sh});return mkPDF(L)}
+  (r.photos||[]).forEach(p=>L.push({img:p.d,w:p.w,h:p.h}));L.push({t:'Mecanico responsable',s:12,b:1,c:NV,g:14},{t:r.mech+'  -  '+r.dt+' '+r.dn,s:10,b:1});
+  if(r.sig)L.push({img:r.sig,w:r.sw,h:r.sh});else L.push({t:'(La firma y las fotos quedaron guardadas en el celular donde se registró.)',s:9,g:4});
+  return mkPDF(L)}
 async function sendDoc(nm,str,subj,sum){
   const by=new Uint8Array(str.length);for(let i=0;i<str.length;i++)by[i]=str.charCodeAt(i);const to=(S.settings.email||'').split(/[,;\s]+/).filter(Boolean);
-  if(S.settings.url&&navigator.onLine){try{await fetch(S.settings.url,{method:'POST',mode:'no-cors',headers:{'Content-Type':'text/plain'},body:JSON.stringify({tipo:'documento',asunto:subj,resumen:sum,fileName:nm,pdfBase64:btoa(str),recipients:to})});toast('Enviado por correo');return}catch(e){}}
+  if(S.sync.url&&navigator.onLine){try{await fetch(S.sync.url,{method:'POST',mode:'no-cors',headers:{'Content-Type':'text/plain'},body:JSON.stringify({tipo:'documento',asunto:subj,resumen:sum,fileName:nm,pdfBase64:btoa(str),recipients:to})});toast('Enviado por correo');return}catch(e){}}
   const f=new File([by],nm,{type:'application/pdf'});
   try{if(navigator.clipboard)navigator.clipboard.writeText(to.join(', ')).catch(()=>{});
     if(navigator.canShare&&navigator.canShare({files:[f]})){await navigator.share({files:[f],title:subj,text:'Para: '+to.join(', ')+'\n'+sum});toast('Compartido. Pega los correos en “Para”.');return}}catch(e){if(e.name==='AbortError')return}
@@ -471,18 +867,11 @@ async function sendDoc(nm,str,subj,sum){
 const mI=id=>S.mdraft.items.find(x=>x.id===id),nI=()=>({id:uid(),text:'',detail:'',photos:[],price:''});
 const opt=(a,v)=>a.map(x=>`<option ${x===v?'selected':''}>${esc(x)}</option>`).join('');
 function vMn(){
-  const d=S.mdraft,s=S.settings;
-  if(!d)return hdr('Mantenimiento','home')+`<label for="m-pr">Propiedad</label><select id="m-pr">${opt(s.props)}</select><label for="m-who">Quién hace el mantenimiento</label>${s.mstaff.length?`<select id="m-who">${opt(s.mstaff)}</select>`:'<input id="m-who" placeholder="Nombre completo">'}<button class="btn" data-a="mbegin">Empezar</button>`;
-  const pd=S.pend.filter(t=>t.prop===d.prop&&!t.done&&!d.items.some(i=>i.task===t.id));
-  return hdr(esc(d.prop),'home')+`<p class="mute">${esc(d.who)} · ${fmt(d.start)}</p>`+d.items.map((i,n)=>`<div class="card"><b>Trabajo ${n+1}</b><label>¿Qué se hizo?</label><input data-m="${i.id}:text" value="${esc(i.text)}"><label>Detalle</label><textarea data-m="${i.id}:detail">${esc(i.detail)}</textarea>${unlocked?`<label>Precio (solo tú lo ves)</label><input inputmode="numeric" data-m="${i.id}:price" value="${esc(i.price||'')}">`:''}${imgs(i.photos,'mdp',i.id)}<button class="btn sm sec" data-a="mph" data-id="${i.id}">Foto</button><button class="btn sm ghost" data-a="mdel" data-id="${i.id}">Quitar</button></div>`).join('')+
-  `<button class="btn sec" data-a="madd">+ Agregar otro trabajo</button>`+(pd.length?'<h2>Pendientes de esta propiedad</h2>'+pd.map(t=>`<button class="area" data-a="mtask" data-id="${t.id}">+ ${esc(t.text)}</button>`).join(''):'')+`<button class="btn" data-a="mfin">Terminar y enviar reporte</button><button class="btn ghost" data-a="mdisc">Descartar</button>`;
-}
-function vPd(){
-  return hdr('Pendientes de mantenimiento','home')+(unlocked?'':'<button class="btn sm sec" data-a="unlockpd">🔒 Ver precios (clave)</button>')+S.settings.props.map((p,j)=>{
-    const ts=S.pend.filter(t=>t.prop===p),op=ts.filter(t=>!t.done),tot=op.reduce((a,t)=>a+(+String(t.price||0).replace(/\D/g,'')||0),0);
-    return `<div class="card"><h3>${esc(p)} <span class="badge ${op.length?'':'sent'}">${op.length} pendiente(s)</span></h3>${unlocked&&tot?`<p class="mute">Estimado: $${tot.toLocaleString('es-CO')}</p>`:''}`+
-    ts.map(t=>`<button class="row ${t.done?'on':''}" data-a="ptog" data-id="${t.id}"><span class="box">✓</span><span>${esc(t.text)}${unlocked&&t.price?' · $'+esc(t.price):''}${t.done?' <small>('+esc(t.doneBy||'')+')</small>':''}</span></button>${unlocked?`<button class="btn sm ghost" data-a="pdel" data-id="${t.id}">Quitar</button>`:''}`).join('')+
-    `<div class="line"><input data-pt placeholder="Nueva tarea"></div>${unlocked?'<div class="line"><input data-pp inputmode="numeric" placeholder="Precio (solo tú lo ves)"></div>':''}<button class="btn sm sec" data-a="padd" data-p="${esc(p)}">+ Agregar</button></div>`}).join('');
+  const d=S.mdraft,s=S.settings,u=me(),ms=usersOf('mant').map(x=>x.name);
+  if(!d)return hdr('Mantenimiento','home')+`<label for="m-pr">Propiedad</label><select id="m-pr">${opt(s.props)}</select><label for="m-who">Quién hace el mantenimiento</label>${u.role==='mant'?`<input id="m-who" value="${esc(u.name)}" readonly>`:ms.length?`<select id="m-who">${opt(ms)}</select>`:'<input id="m-who" placeholder="Nombre completo">'}<button class="btn" data-a="mbegin">Empezar</button>`;
+  const pd=S.tasks.filter(t=>t.kind==='mant'&&(!t.prop||t.prop===d.prop)&&tst(t)!=='hecha'&&(adm()||mine(t))&&!d.items.some(i=>i.task===t.id));
+  return hdr(esc(d.prop),'home')+`<p class="mute">${esc(d.who)} · ${fmt(d.start)}</p>`+d.items.map((i,n)=>`<div class="card"><b>Trabajo ${n+1}</b><label>¿Qué se hizo?</label><input data-m="${i.id}:text" value="${esc(i.text)}"><label>Detalle</label><textarea data-m="${i.id}:detail">${esc(i.detail)}</textarea>${adm()?`<label>Precio (solo las administradoras lo ven)</label><input inputmode="numeric" data-m="${i.id}:price" value="${esc(i.price||'')}">`:''}${i.task?`<button class="btn sm sec" data-a="task" data-id="${i.task}">Materiales y mano de obra${W(i.task)&&costs(W(i.task)).t?' · '+money(costs(W(i.task)).t):''}</button>`:''}${imgs(i.photos,'mdp',i.id)}<button class="btn sm sec" data-a="mph" data-id="${i.id}">Foto</button><button class="btn sm ghost" data-a="mdel" data-id="${i.id}">Quitar</button></div>`).join('')+
+  `<button class="btn sec" data-a="madd">+ Agregar otro trabajo</button>`+(pd.length?'<h2>Pendientes de esta propiedad</h2><p class="mute sm">Toca uno para agregarlo a este reporte.</p>'+pd.map(t=>`<button class="area" data-a="mtask" data-id="${t.id}">+ ${esc(t.title)}</button>`).join(''):'')+`<button class="btn" data-a="mfin">Terminar y enviar reporte</button><button class="btn ghost" data-a="mdisc">Descartar</button>`;
 }
 function vBk(){
   const o=S.bkd||(S.bkd={bike:S.bikes[0]||'',mech:'',dt:'Cédula de ciudadanía',dn:'',detail:'',photos:[],sig:''});
@@ -499,31 +888,27 @@ function bkInit(){
   c.onpointerup=c.onpointercancel=()=>{if(!dr)return;dr=false;const t=document.createElement('canvas');t.width=c.width;t.height=c.height;const g=t.getContext('2d');g.fillStyle='#fff';g.fillRect(0,0,t.width,t.height);g.drawImage(c,0,0);S.bkd.sig=t.toDataURL('image/jpeg',.9);S.bkd.sw=t.width;S.bkd.sh=t.height;save()};
 }
 const _vh=vHist,sumP=t=>(+String(t||0).replace(/\D/g,'')||0);
-VIEWS.mn=vMn;VIEWS.pd=vPd;VIEWS.bk=vBk;
-VIEWS.hist=()=>_vh()+'<h2>Mantenimientos</h2>'+(S.mreports.length?S.mreports.map(r=>{const t=r.items.reduce((a,i)=>a+sumP(i.price),0);return `<div class="card"><b>${esc(r.prop)}</b> · ${fmt(r.start)}<br><span class="mute">${esc(r.who)} · ${r.items.length} trabajo(s)${t?' · $'+t.toLocaleString('es-CO'):''}</span><br><button class="btn sm sec" data-a="mre" data-id="${r.id}">Reenviar PDF</button></div>`}).join(''):'<p class="mute">Sin registros.</p>')+'<h2>Bicicletas</h2>'+(S.bikelogs.length?S.bikelogs.map(r=>`<div class="card"><b>${esc(r.bike)}</b> · ${fmt(r.date)}<br><span class="mute">${esc(r.mech)} · ${esc(r.dt)} ${esc(r.dn)}</span><br><button class="btn sm sec" data-a="bre" data-id="${r.id}">Reenviar PDF</button></div>`).join(''):'<p class="mute">Sin registros.</p>');
+VIEWS.mn=vMn;VIEWS.bk=vBk;
+VIEWS.hist=()=>_vh()+'<h2>Mantenimientos</h2>'+(S.mreports.length?S.mreports.map(r=>{const t=r.items.reduce((a,i)=>a+sumP(i.price),0),mc=r.items.reduce((a,i)=>a+(i.task&&W(i.task)?costs(W(i.task)).t:0),0);return `<div class="card"><b>${esc(r.prop)}</b> · ${fmt(r.start)}<br><span class="mute">${esc(r.who)} · ${r.items.length} trabajo(s)${t?' · precio $'+t.toLocaleString('es-CO'):''}${mc?' · materiales y mano de obra '+money(mc):''}</span><br><button class="btn sm sec" data-a="mre" data-id="${r.id}">Reenviar PDF</button></div>`}).join(''):'<p class="mute">Sin registros.</p>')+'<h2>Bicicletas</h2>'+(S.bikelogs.length?S.bikelogs.map(r=>`<div class="card"><b>${esc(r.bike)}</b> · ${fmt(r.date)}<br><span class="mute">${esc(r.mech)} · ${esc(r.dt)} ${esc(r.dn)}</span><br><button class="btn sm sec" data-a="bre" data-id="${r.id}">Reenviar PDF</button></div>`).join(''):'<p class="mute">Sin registros.</p>');
 Object.assign(A,{
-  mbegin(){const w=($('#m-who').value||'').trim();if(!w){toast('Escribe quién hace el mantenimiento');return}S.mdraft={id:uid(),prop:$('#m-pr').value,who:w,start:Date.now(),items:[nI()]};save();go('mn')},
+  mbegin(){const w=($('#m-who').value||'').trim();if(!w){toast('Escribe quién hace el mantenimiento');return}S.mdraft={id:uid(),by:me().id,prop:$('#m-pr').value,who:w,start:Date.now(),items:[nI()]};save();go('mn')},
   madd(){S.mdraft.items.push(nI());save();V.keep=true;render()},
   mdel(e){S.mdraft.items=S.mdraft.items.filter(i=>i.id!==e.dataset.id);if(!S.mdraft.items.length)S.mdraft.items.push(nI());save();V.keep=true;render()},
   mph(e){const i=mI(e.dataset.id);if(i.photos.length>=4){toast('Máximo 4 fotos por trabajo');return}pt=p=>i.photos.push(p);ph2.click()},
   mdp(e){mI(e.dataset.id).photos.splice(+e.dataset.i,1);save();V.keep=true;render()},
-  mtask(e){const t=S.pend.find(x=>x.id===e.dataset.id);const it=S.mdraft.items;if(it.length===1&&!it[0].text&&!it[0].photos.length)it.length=0;S.mdraft.items.push({id:uid(),text:t.text,detail:'',photos:[],price:t.price||'',task:t.id});save();V.keep=true;render()},
+  mtask(e){const t=S.tasks.find(x=>x.id===e.dataset.id);const it=S.mdraft.items;if(it.length===1&&!it[0].text&&!it[0].photos.length)it.length=0;S.mdraft.items.push({id:uid(),text:t.title,detail:t.detail||'',photos:[],price:adm()?t.budget||'':'',task:t.id});save();V.keep=true;render()},
   mdisc(){if(confirm('¿Descartar este registro?')){S.mdraft=null;save();go('home')}},
   mfin(){const d=S.mdraft;d.items=d.items.filter(i=>i.text.trim());if(!d.items.length){toast('Escribe al menos un trabajo realizado');return}
-    d.end=Date.now();d.status='pending';d.items.forEach(i=>{const t=S.pend.find(x=>x.id===i.task);if(t){t.done=true;t.doneBy=d.who;t.doneAt=d.end}});
-    S.mreports.unshift(d);S.mreports.slice(8).forEach(r=>r.items.forEach(i=>i.photos=[]));S.mdraft=null;save();go('home');
+    d.end=Date.now();d.status='pending';d.items.forEach(i=>{const t=S.tasks.find(x=>x.id===i.task);if(t){const w=getW(t.id);if(w.status!=='hecha'){w.status='hecha';w.doneBy=me().id;w.doneAt=d.end;touch('work',w)}}});
+    S.mreports.unshift(d);touch('mreports',d);S.mreports.slice(8).forEach(r=>r.items.forEach(i=>i.photos=[]));S.mdraft=null;save();go('home');
     sendDoc('mantenimiento-'+d.prop.toLowerCase().replace(/[^a-z0-9]+/g,'-')+'-'+new Date(d.start).toISOString().slice(0,10)+'.pdf',mnPDF(d),'Reporte de mantenimiento - '+d.prop,'Mantenimiento en '+d.prop+' por '+d.who+' ('+d.items.length+' trabajo(s)).')},
-  unlockpd(){V={n:'pin',to:'pd'};pinBuf='';render()},
-  padd(e){const c=e.closest('.card'),t=c.querySelector('[data-pt]').value.trim();if(!t){toast('Escribe la tarea');return}const pp=c.querySelector('[data-pp]');S.pend.push({id:uid(),prop:e.dataset.p,text:t,price:pp?pp.value.trim():'',done:false,date:Date.now()});save();V.keep=true;render()},
-  ptog(e){const t=S.pend.find(x=>x.id===e.dataset.id);if(t.done){t.done=false}else{const w=prompt('¿Quién lo hizo?');if(w===null)return;t.done=true;t.doneBy=w.trim();t.doneAt=Date.now()}save();V.keep=true;render()},
-  pdel(e){if(confirm('¿Quitar esta tarea?')){S.pend=S.pend.filter(x=>x.id!==e.dataset.id);save();V.keep=true;render()}},
   bph(){if(S.bkd.photos.length>=4){toast('Máximo 4 fotos');return}pt=p=>S.bkd.photos.push(p);ph2.click()},
   bdp(e){S.bkd.photos.splice(+e.dataset.i,1);save();V.keep=true;render()},
   bclr(){S.bkd.sig='';save();bkInit()},
   bdisc(){if(confirm('¿Descartar este registro?')){S.bkd=null;save();go('home')}},
   bfin(){const o=S.bkd;if(!o.detail.trim()||!o.mech.trim()||!o.dn.trim()){toast('Completa el detalle y los datos del mecánico');return}
     if(!o.photos.length){toast('Agrega al menos una foto de evidencia');return}if(!o.sig){toast('Falta la firma del mecánico');return}
-    const r={...o,id:uid(),date:Date.now()};S.bikelogs.unshift(r);S.bikelogs.slice(8).forEach(x=>{x.photos=[]});S.bkd=null;save();go('home');
+    const r={...o,id:uid(),by:me().id,date:Date.now()};S.bikelogs.unshift(r);touch('bikelogs',r);S.bikelogs.slice(8).forEach(x=>{x.photos=[]});S.bkd=null;save();go('home');
     sendDoc('bicicleta-'+r.bike.toLowerCase().replace(/[^a-z0-9]+/g,'-')+'-'+new Date(r.date).toISOString().slice(0,10)+'.pdf',bkPDF(r),'Mantenimiento de bicicleta - '+r.bike,'Mantenimiento de '+r.bike+' por '+r.mech+' ('+r.dt+' '+r.dn+').')},
   mre(e){const r=S.mreports.find(x=>x.id===e.dataset.id);sendDoc('mantenimiento-'+new Date(r.start).toISOString().slice(0,10)+'.pdf',mnPDF(r),'Reporte de mantenimiento - '+r.prop,'Mantenimiento en '+r.prop+' por '+r.who+'.')},
   bre(e){const r=S.bikelogs.find(x=>x.id===e.dataset.id);sendDoc('bicicleta-'+new Date(r.date).toISOString().slice(0,10)+'.pdf',bkPDF(r),'Mantenimiento de bicicleta - '+r.bike,'Mantenimiento de '+r.bike+' por '+r.mech+'.')}
@@ -532,11 +917,13 @@ document.addEventListener('input',ev=>{const t=ev.target;
   if(t.dataset.m&&S.mdraft){const[id,f]=t.dataset.m.split(':');const i=mI(id);if(i){i[f]=t.value;save()}}
   if(t.dataset.k&&S.bkd){S.bkd[t.dataset.k]=t.value;save()}});
 document.addEventListener('change',ev=>{const t=ev.target;
-  if(t.dataset.x==='mstaff'){S.settings.mstaff=t.value.split(',').map(x=>x.trim()).filter(Boolean);save()}
-  if(t.dataset.x==='bikes'){S.bikes=t.value.split(',').map(x=>x.trim()).filter(Boolean);save()}});
+  if(t.dataset.x==='bikes'){S.bikes=t.value.split(',').map(x=>x.trim()).filter(Boolean);cfgMain();save()}});
 
 if('serviceWorker' in navigator)addEventListener('load',()=>navigator.serviceWorker.register('service-worker.js').catch(()=>{}));
-render();autoUp();
+applyHash();
+V={n:me()?'home':'login'};
+render();autoUp();syncNow();
+setInterval(()=>{if(document.visibilityState==='visible'&&navigator.onLine&&!syncing)syncNow()},60000);
 </script>
 </body>
 </html>
